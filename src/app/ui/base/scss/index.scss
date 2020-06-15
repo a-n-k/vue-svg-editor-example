@@ -1,0 +1,11 @@
+$border: 1px solid silver;
+$br-radius: 10px;
+$padding: 10px;
+
+$err-color: red;
+
+@mixin box() {
+	padding: $padding;
+	border: $border;
+	border-radius: $br-radius;
+}

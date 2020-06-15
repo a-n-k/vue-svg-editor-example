@@ -1,0 +1,29 @@
+/* reset */
+
+* {
+	margin: 0;
+	padding: 0;
+	border: none;
+	box-sizing: border-box;
+}
+
+img {
+	border-style: none;
+}
+
+button:focus, input[type=submit]:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+/* base */
+
+body {
+	font-family: Helvetica, sans-serif;
+	font-size: 14px;
+	padding: 10px;
+}
+
+button, input[type=submit] {
+	cursor: pointer;
+}
