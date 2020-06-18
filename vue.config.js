@@ -1,6 +1,9 @@
 process.env.VUE_APP_TEST = process.env.TEST;
 
+const PUBLIC_PATH = '/vue-svg-editor-example';
+
 module.exports = {
+	publicPath: process.env.NODE_ENV === 'production' ? PUBLIC_PATH : '/',
 	productionSourceMap: false,
 	parallel: false,
 	chainWebpack: function (config) {

@@ -9,7 +9,7 @@ const routes = homeRoutes.concat(editorRoutes);
 
 const router = new VueRouter({
 	mode: 'history',
-	base: '/',
+	base: process.env.BASE_URL,
 	routes
 });
 
