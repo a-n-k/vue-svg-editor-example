@@ -1,6 +1,8 @@
 <template lang="pug">
 	div.project(v-if="project")
 		div.header
+			router-link(to="/") home
+			span.arrow
 			router-link(to="/projects") projects
 			span.arrow
 			span.name {{project.name}}
@@ -186,7 +188,7 @@
 			display: inline-block;
 			@include size(9px);
 			background: url(~@/app/ui/editor/pages/project/assets/arrow.svg);
-			margin: 0 5px;
+			margin: 0 10px;
 		}
 
 		.name {
