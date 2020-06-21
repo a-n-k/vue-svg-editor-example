@@ -28,7 +28,7 @@
 	export default {
 		name: "setting",
 		components: {Widget, SvgForms},
-		props: ['figure', 'original'],
+		props: ['figure', 'original', 'needSave'],
 		data() {
 			return {
 				isShapeChanged: false
@@ -58,6 +58,11 @@
 				this.$emit('change', {
 					shapes: changedShapes
 				});
+			},
+			needSave(value) {
+				if (value) return;
+				this.isShapeChanged = false;
+				changedShapes.length = 0;
 			}
 		}
 	}

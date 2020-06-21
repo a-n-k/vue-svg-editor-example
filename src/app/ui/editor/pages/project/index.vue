@@ -16,13 +16,14 @@
 				)
 			div.column.clm-center
 				preview(
-					:shapes="shapes" :size="size" :isSave="isChanged"
+					:shapes="shapes" :size="size" :needSave="isChanged"
 					@change="onSizeChanged" @remove="onProjectRemove"
 					@save="onSaveAll"
 				)
 			div.column
 				setting(
 					:figure="figure" :original="shapeOriginal"
+					:needSave="isChanged"
 					@change="onShapeChanged"
 				)
 	div.empty(v-else)
@@ -105,7 +106,7 @@
 			async onShapeType(model) {
 				const data = this.$data,
 						shapes = data.shapes;
-				model.index = shapes.length * shapeUtils.INDEX_STEP;
+				model.index = (shapes.length + 1) * shapeUtils.INDEX_STEP;
 				const shape = await interactor.createShape(model, data.project.id);
 				originalShapes.push(shape);
 
@@ -118,6 +119,7 @@
 				await interactor.deleteShape(shapeId);
 				shapeUtils.remove(shapeId, this.shapes);
 				this.isChanged = changesManager.isChanged();
+				this.figure = null;
 			},
 			async onProjectRemove() {
 				await interactor.deleteProject(this.project.id);
@@ -136,7 +138,7 @@
 
 				if (size) {
 					const project = this.project;
-					project.size = size;
+					project.size = Object.assign({}, size);
 					await interactor.updateProject(project);
 				}
 
@@ -149,7 +151,7 @@
 				originalShapes = utils.deepClone(this.shapes);
 
 				changesManager.reset();
-				this.isChanged = changesManager.isChanged();
+				this.isChanged = false;
 			}
 		},
 		async created() {

@@ -17,7 +17,7 @@
 					label height
 						input.ipt(type="text" v-model.lazy.trim.number="hSize.height" required)
 			span.spr
-			button(:disabled="!isSave" @click="onSaveAll") Save All
+			button(:disabled="!needSave" @click="onSaveAll") Save All
 		template(#main)
 			div.e-main
 				holder(:shapes="shapes" :size="hSize")
@@ -33,7 +33,7 @@
 	export default {
 		name: 'preview',
 		components: {Widget, Holder},
-		props: ['shapes', 'size', 'isSave'],
+		props: ['shapes', 'size', 'needSave'],
 		data() {
 			return {
 				hSize: utils.deepClone(this.size),
@@ -65,6 +65,9 @@
 				this.$emit('change', {
 					value, size: this.hSize
 				});
+			},
+			needSave(value) {
+				if (!value) this.isSizeChanged = false;
 			}
 		}
 	}

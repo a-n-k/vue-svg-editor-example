@@ -16,11 +16,14 @@
 	import SvgCircle from './circle';
 	import SvgEllipse from './ellipse';
 	import SvgLine from './line';
-	import SvgRect from './rectangle'
+	import SvgRect from './rectangle';
+	import SvgText from './text';
 
 	export default {
 		name: "svg-canvas",
-		components: {SvgCircle, SvgEllipse, SvgLine, SvgRect},
+		components: {
+			SvgCircle, SvgEllipse, SvgLine, SvgRect, SvgText
+		},
 		props: {
 			size: {type: Object, required: true},
 			shapes: {type: Array, required: true}

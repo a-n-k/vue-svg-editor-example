@@ -22,7 +22,7 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.svg-holder {
 		background: url('~@/app/ui/editor/pages/project/assets/bg.svg');
 		margin: 0 auto;

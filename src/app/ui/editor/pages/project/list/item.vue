@@ -1,6 +1,7 @@
 <template lang="pug">
 	div.item(:class="{selected:isSelected}" @click.prevent="onClick")
 		div.icon(:class="value.type")
+			span(v-if="value.type==='text'") T
 		div.type {{label}}
 </template>
 
@@ -68,6 +69,12 @@
 
 	.rectangle {
 		border-radius: 5px;
+	}
+
+	.text {
+		font-size: 20px;
+		font-weight: bold;
+		padding-left: 2px;
 	}
 
 	.type {

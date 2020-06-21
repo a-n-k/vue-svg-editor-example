@@ -11,18 +11,22 @@ export const project = {
 };
 
 const CIRCLE = 'circle', ELLIPSE = 'ellipse',
-		LINE = 'line', RECTANGLE = 'rect',
+		LINE = 'line', RECTANGLE = 'rect', TEXT = 'text',
 		fill = 'silver',
 		stroke = {
 			width: 2,
 			color: 'black',
-			linecap: 'butt', // butt | round | square | inherit
 			dasharray: ''
+		},
+		font = {
+			family: '',
+			size: '24px',
+			weight: ''
 		};
 
 export const shape = {
 	types: [
-		CIRCLE, ELLIPSE, LINE, RECTANGLE
+		CIRCLE, ELLIPSE, LINE, RECTANGLE, TEXT
 	],
 	options: {
 		[CIRCLE]: {
@@ -37,13 +41,19 @@ export const shape = {
 		[LINE]: {
 			x1: WIDTH / 2, y1: HEIGHT / 2,
 			x2: WIDTH, y2: HEIGHT / 2,
-			stroke
+			// butt | round | square | inherit
+			stroke: Object.assign(stroke, {linecap: 'butt'})
 		},
 		[RECTANGLE]: {
 			x: 0, y: 0,
 			rx: 0, ry: 0, // for round the corners of the rectangle
 			width: WIDTH / 2, height: HEIGHT / 2,
 			fill, stroke
+		},
+		[TEXT]: {
+			value: 'T',
+			x: 0, y: HEIGHT / 2,
+			fill, stroke, font
 		}
 	},
 	newest: {type: '', index: 0},

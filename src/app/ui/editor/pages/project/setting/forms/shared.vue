@@ -12,6 +12,9 @@
 				div.field
 					label.lbl color
 						input.ipt.color(type="text" v-model.lazy.trim="stroke.color" required)
+				div.field
+					label.lbl dasharray
+						input.ipt.color(type="text" v-model.lazy.trim="stroke.dasharray")
 				div.field(v-if="isLine")
 					label.lbl linecap
 						select.ipt.color(v-model="stroke.linecap")
@@ -19,9 +22,17 @@
 							option(value="round") round
 							option(value="square") square
 							option(value="inherit") inherit
-				div.field
-					label.lbl dasharray
-						input.ipt.color(type="text" v-model.lazy.trim="stroke.dasharray")
+		div.field(v-if="isText")
+			div.name font
+			div.field
+				label.lbl family
+					input.ipt.color(type="text" v-model.lazy.trim="font.family" required)
+			div.field
+				label.lbl size
+					input.ipt(type="text" v-model.lazy.trim="font.size" required)
+			div.field
+				label.lbl weight
+					input.ipt(type="text" v-model.lazy.trim="font.weight" required)
 </template>
 
 <script>
@@ -32,8 +43,14 @@
 			stroke() {
 				return this.options.stroke;
 			},
+			font() {
+				return this.options.font;
+			},
 			isLine() {
 				return this.type === 'line';
+			},
+			isText() {
+				return this.type === 'text';
 			}
 		}
 	}

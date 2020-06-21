@@ -14,11 +14,14 @@
 	import FormCircle from './circle';
 	import FormEllipse from './ellipse';
 	import FormLine from './line';
-	import FormRect from './rectangle'
+	import FormRect from './rectangle';
+	import FormText from './text';
 
 	export default {
 		name: "svg-forms",
-		components: {FormCircle, FormEllipse, FormLine, FormRect},
+		components: {
+			FormCircle, FormEllipse, FormLine, FormRect, FormText
+		},
 		props: ['figure'],
 		methods: {
 			componentName(type) {
@@ -43,10 +46,14 @@
 		.ipt {
 			border: $border;
 			border-radius: $br-radius;
-			width: 45px;
+			width: 50px;
 			text-align: center;
 			margin: 10px;
 			font-size: 16px;
+		}
+
+		.long {
+			width: 150px;
 		}
 	}
 
