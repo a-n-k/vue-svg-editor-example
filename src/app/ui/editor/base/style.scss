@@ -1,4 +1,4 @@
-@import '../../base/scss/index.scss';
+@import '~@/app/ui/base/scss/index.scss';
 
 @mixin empty-msg() {
 	margin: 200px;
@@ -7,15 +7,4 @@
 	font-size: 18px;
 	font-style: italic;
 	font-weight: bold;
-}
-
-@mixin size($value) {
-	width: $value;
-	height: $value;
-}
-
-@mixin fx-center() {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }

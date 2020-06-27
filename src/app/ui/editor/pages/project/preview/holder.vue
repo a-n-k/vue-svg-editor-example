@@ -24,7 +24,7 @@
 
 <style lang="scss">
 	.svg-holder {
-		background: url('~@/app/ui/editor/pages/project/assets/bg.svg');
+		background: url('~@/lib/icons/bg.svg');
 		margin: 0 auto;
 	}
 </style>

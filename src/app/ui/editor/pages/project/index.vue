@@ -1,31 +1,39 @@
 <template lang="pug">
 	div.project(v-if="project")
-		div.header
-			router-link(to="/") home
-			span.arrow
-			router-link(to="/projects") projects
-			span.arrow
-			span.name {{project.name}}
-		div.frame
-			div.column
-				list(
+		div.header.flex-v-center
+			div.flex-r-inline.tb-trash
+				span.icon.trash(title="Delete Project"
+					@click.prevent="onProjectRemove"
+				)
+			div.flex-l-inline
+				router-link(to="/") home
+				span.icon.sep.arrow
+				router-link(to="/projects") projects
+				span.icon.sep.arrow
+				span.name {{project.name}}
+		toolbar
+
+
+	//	div.frame
+				div.column
+					list(
 					:shapes="shapes" :figure="figure"
-					:newShape="newShape" :types="shapeTypes"
-					@change="onShapeSelected"
-					@type="onShapeType" @remove="onShapeRemove"
-				)
-			div.column.clm-center
-				preview(
-					:shapes="shapes" :size="size" :needSave="isChanged"
-					@change="onSizeChanged" @remove="onProjectRemove"
-					@save="onSaveAll"
-				)
-			div.column
-				setting(
-					:figure="figure" :original="shapeOriginal"
-					:needSave="isChanged"
-					@change="onShapeChanged"
-				)
+						:newShape="newShape" :types="shapeTypes"
+						@change="onShapeSelected"
+						@type="onShapeType" @remove="onShapeRemove"
+					)
+					div.column.clm-center
+						preview(
+							:shapes="shapes" :size="size" :needSave="isChanged"
+							@change="onSizeChanged" @remove="onProjectRemove"
+							@save="onSaveAll"
+						)
+				div.column
+					setting(
+						:figure="figure" :original="shapeOriginal"
+						:needSave="isChanged"
+						@change="onShapeChanged"
+					)onShapeChanged
 	div.empty(v-else)
 		p Project not exists
 		p.link
@@ -33,6 +41,7 @@
 </template>
 
 <script>
+	import Toolbar from './toolbar'
 	import interactor from '@/app/domain/interactor';
 	import List from './list/index';
 	import Preview from './preview/index';
@@ -76,7 +85,7 @@
 
 	export default {
 		name: "project",
-		components: {List, Preview, Setting},
+		components: {Toolbar, List, Preview, Setting},
 		data() {
 			return {
 				project: null, shapes: [], figure: null,
@@ -180,23 +189,24 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../base/style.scss";
+	@import "~@/app/ui/editor/base/style.scss";
 
 	.header {
 		font-style: italic;
-		padding: 0 0 $padding $padding;
-
-		.arrow {
-			display: inline-block;
-			@include size(9px);
-			background: url(~@/app/ui/editor/pages/project/assets/arrow.svg);
-			margin: 0 10px;
-		}
 
 		.name {
 			color: green;
 			font-weight: bold;
 			font-size: 16px;
+		}
+		.sep{
+			width: 9px;
+			height: 9px;
+			margin:5px 10px;
+		}
+
+		.tb-trash {
+			margin: 0 20px 0 0;
 		}
 	}
 

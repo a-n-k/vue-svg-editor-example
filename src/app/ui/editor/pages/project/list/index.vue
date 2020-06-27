@@ -18,7 +18,7 @@
 			div.empty(v-else)
 				p Figures are not exists
 				p.add Please add new figure from toolbar above
-			div.modal(v-if="isNew")
+			//div.modal(v-if="isNew")
 				div.content
 					div.close
 						button(@click="cancel") &times;
@@ -78,10 +78,6 @@
 
 	.list {
 		padding: 0 $padding 0 0;
-	}
-
-	.plus {
-		background: url(~@/app/ui/editor/pages/project/assets/plus.svg);
 	}
 
 	.empty {

@@ -17,21 +17,21 @@
 			height: 30px;
 			border-bottom: $border;
 			padding: 0 0 8px 0;
-			@include fx-center();
+			//@include flex-vh-center();
 
 			.icon {
 				display: inline-block;
 				margin: 0 10px;
-				@include size(20px);
+				//@include size(20px);-->*/
 				cursor: pointer;
 			}
 
 			.trash {
-				background: url(~@/app/ui/editor/pages/project/assets/trash.svg);
+				background: url(~@/lib/icons/trash.svg);
 			}
 
 			.reset {
-				background: url(~@/app/ui/editor/pages/project/assets/reset.svg);
+				background: url(~@/lib/icons/reset.svg);
 			}
 
 			.disabled {
