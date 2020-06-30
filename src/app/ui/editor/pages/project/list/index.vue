@@ -15,7 +15,7 @@
 					:value="item" :current="figure"
 					@selected="onShapeSelected"
 				)
-			div.empty(v-else)
+			div.empty-msg.empty(v-else)
 				p Figures are not exists
 				p.add Please add new figure from toolbar above
 			//div.modal(v-if="isNew")
@@ -74,14 +74,13 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../../base/style.scss";
+	@import "~@/app/ui/base/scss/index.scss";
 
 	.list {
 		padding: 0 $padding 0 0;
 	}
 
 	.empty {
-		@include empty-msg();
 		margin: 100px 0;
 		font-size: inherit;
 	}

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import state from '@/app/store/state';
+import getters from '@/app/store/getters';
 import mutations from '@/app/store/mutations';
 import actions from '@/app/store/actions';
 
@@ -12,5 +13,5 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export default new Vuex.Store({
-	strict, state, mutations, actions
+	strict, state, getters, mutations, actions
 });

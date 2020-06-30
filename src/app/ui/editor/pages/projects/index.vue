@@ -1,7 +1,7 @@
 <template lang="pug">
 	div
 		div.list
-			div.empty(v-if="!projects.length")
+			div.empty-msg(v-if="!projects.length")
 				p Projects not exists
 			div.items(v-else)
 				router-link.rr-link(
@@ -9,62 +9,70 @@
 					tag="div", :to="link(pt.id)"
 				)
 					div.item
-						div.icon
+						div.project-icon
 						div.name
 							div.value {{pt.name}}
 		hr
-		div.toolbar
-			form(@submit="newProject")
+		div.new-project
+			form(@submit.prevent="newProject")
 				div.clm
 					input.ipt(
 						type="text" placeholder="Project Name"
-						v-model.lazy.trim="model.name"
+						name="name" :value="model.name"
 						required pattern="[A-Za-z0-9 ]{3,50}"
 						title="Only letters, numbers and spaces. Length is min:3, max:50"
+						@change="onInputChange"
 					)
 				div.clm
 					button.btn(type="submit") Create New Project
 </template>
 
 <script>
-	import interactor from '@/app/domain/interactor';
+	import {mapGetters, mapActions, mapMutations} from 'vuex';
+	import {getters, actions, mutations} from '@/app/store/types';
 
 	const BASE_LINK = '/project/';
 
 	export default {
 		name: "projects",
-		data() {
-			return {
-				projects: [],
-				model: interactor.newestProjectEntity()
-			};
+		computed: {
+			...mapGetters([
+				getters.PROJECTS,
+				getters.NEWEST_PROJECT_ENTITY
+			]),
+			model() {
+				return this[getters.NEWEST_PROJECT_ENTITY];
+			}
 		},
 		methods: {
+			...mapActions([
+				actions.LOAD_PROJECTS,
+				actions.CREATE_NEW_PROJECT
+			]),
+			...mapMutations([mutations.CHANGE_NEWEST_PROJECT]),
 			link(id) {
 				return BASE_LINK + id;
 			},
+			onInputChange(event) {
+				this[mutations.CHANGE_NEWEST_PROJECT](event.target);
+			},
 			async newProject() {
-				const pt = await interactor.createProject(this.model);
-				this.projects.unshift(pt);
+				await this[actions.CREATE_NEW_PROJECT]();
 			}
 		},
 		async created() {
-			this.projects = await interactor.loadProjects();
+			await this[actions.LOAD_PROJECTS]();
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	@import "../../base/style.scss";
+	@import "~@/app/ui/base/scss/index.scss";
 
 	.list {
 		padding: $padding;
 		display: flex;
 		justify-content: center;
-	}
-
-	.empty {
-		@include empty-msg();
 	}
 
 	.rr-link {
@@ -86,7 +94,7 @@
 		background-color: #efefef;
 	}
 
-	.icon {
+	.project-icon {
 		width: $i-size;
 		height: $i-size;
 		background: url(~@/app/ui/editor/pages/projects/project.png) center;
@@ -111,7 +119,7 @@
 
 	$font-size: 18px;
 
-	.toolbar {
+	.new-project {
 		margin-bottom: 15px;
 		text-align: center;
 	}

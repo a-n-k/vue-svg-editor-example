@@ -1,11 +1,11 @@
-const WIDTH = 240, HEIGHT = 240;
+const WIDTH = 240, HEIGHT = 240, UNIT = 'px';
 
 export const project = {
 	newest: {name: ''},
 	modify(model) {
 		return Object.assign({
 			modified: Date.now(),
-			size: {width: WIDTH, height: HEIGHT, unit: 'px'}
+			size: {width: WIDTH, height: HEIGHT, unit: UNIT}
 		}, model);
 	}
 };

@@ -34,7 +34,7 @@
 						:needSave="isChanged"
 						@change="onShapeChanged"
 					)onShapeChanged
-	div.empty(v-else)
+	div.empty-msg(v-else)
 		p Project not exists
 		p.link
 			router-link(to="/projects") Please visit to projects page
@@ -189,7 +189,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "~@/app/ui/editor/base/style.scss";
+	@import "~@/app/ui/base/scss/index.scss";
 
 	.header {
 		font-style: italic;
@@ -229,9 +229,7 @@
 		border-right: $border;
 	}
 
-	.empty {
-		@include empty-msg();
-
+	.empty-msg {
 		.link {
 			margin: 50px 0 0 0;
 			font-weight: normal;

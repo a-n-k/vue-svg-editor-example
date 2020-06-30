@@ -69,7 +69,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "~@/app/ui/editor/base/style.scss";
+	@import "~@/app/ui/base/scss/index.scss";
 
 	.toolbar {
 		height: 29px;

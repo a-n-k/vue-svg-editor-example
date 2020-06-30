@@ -5,14 +5,18 @@ describe('editor partition - projects page', function () {
 		cy.goTo('/projects');
 	});
 
+	function newProjectEl() {
+		return cy.get('div.new-project');
+	}
+
 	it('should has empty list of projects', function () {
 		cy.get('div.list')
-				.get('div.empty p')
+				.get('div.empty-msg p')
 				.should('contain', 'not exists');
 	});
 
-	it('should has toolbar', function () {
-		cy.get('div.toolbar')
+	it('should has form for create new project', function () {
+		newProjectEl()
 				.get('form')
 				.get('input[type=text]')
 				.get('button[type=submit]')
@@ -21,12 +25,12 @@ describe('editor partition - projects page', function () {
 
 	it('should can create new project', function () {
 		const newProjectName = 'This is test for creating new project'
-		cy.get('div.toolbar input').type(newProjectName);
-		cy.get('div.toolbar button').click();
+		newProjectEl().get('input').type(newProjectName);
+		newProjectEl().get('button').click();
 		cy.get('div.list div.items')
 				.get('div.item div.value')
 				.should('contain', newProjectName);
-		cy.get('input.ipt')
+		newProjectEl().get('input.ipt')
 				.should('have.value', '');
 	});
 

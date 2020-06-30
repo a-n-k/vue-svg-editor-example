@@ -7,15 +7,15 @@
 </template>
 
 <style lang="scss">
-	@import "../../base/style.scss";
+	/*@import "../../base/style.scss";*/
 
 	.widget {
 		width: 100%;
-		padding: 0 $padding;
-
+		/*<!--padding: 0 $padding;-->*/
+		/**/
 		.tools {
 			height: 30px;
-			border-bottom: $border;
+			/*<!--border-bottom: $border;-->*/
 			padding: 0 0 8px 0;
 			//@include flex-vh-center();
 

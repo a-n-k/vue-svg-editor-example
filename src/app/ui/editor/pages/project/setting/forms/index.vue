@@ -32,7 +32,7 @@
 </script>
 
 <style lang="scss">
-	@import "../../../../base/style.scss";
+	@import "~@/app/ui/base/scss/index.scss";
 
 	.field {
 		padding: 0 10px;

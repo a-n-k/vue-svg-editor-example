@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Root from '@/app/ui/base/root'
 import router from '@/app/ui/base/router'
 import store from '@/app/store';
-import {localDB} from '@/app/repository';
+import {localDB} from '@/app/repository/local';
 
 Vue.config.productionTip = false;
 

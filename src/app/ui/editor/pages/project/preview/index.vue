@@ -74,7 +74,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../../base/style.scss";
+	@import "~@/app/ui/base/scss/index.scss";
 
 	.e-preview {
 		padding: 0 $padding;

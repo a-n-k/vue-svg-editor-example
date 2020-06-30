@@ -69,7 +69,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../../base/style.scss";
+	@import "~@/app/ui/base/scss/index.scss";
 
 	.setting {
 		padding: 0 0 0 $padding;
