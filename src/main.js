@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Root from '@/app/ui/base/root'
 import router from '@/app/ui/base/router'
+import store from '@/app/store';
 import {localDB} from '@/app/repository';
 
 Vue.config.productionTip = false;
 
-const options = {router},
+const options = {router, store},
 		root = new Vue(Object.assign(Root, options));
 
 function start(dbName) {
