@@ -91,7 +91,8 @@
 	}
 
 	.item:hover {
-		background-color: #efefef;
+		background-color: #dddddd;
+		cursor: pointer;
 	}
 
 	.project-icon {

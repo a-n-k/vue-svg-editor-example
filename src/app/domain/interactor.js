@@ -1,5 +1,6 @@
 import {api} from '../repository/local';
 import {project, shape} from './entity';
+import {byNumberValue} from '@/lib/modules/predicates';
 
 export default {
 	newestProjectEntity() {
@@ -14,18 +15,16 @@ export default {
 
 	async loadProjects() {
 		const items = await api.projects.readAll();
-		items.sort((a, b) => b.modified - a.modified);
+		items.sort(byNumberValue('modified', -1));
 		return items;
 	},
-// 	async loadProject(id) {
-// 		const project = await api.getProject(id);
-// 		if (!project) return null;
-//
-// 		return {
-// 			project,
-// 			shapes: await api.getShapes(id)
-// 		};
-// 	},
+	async loadProject(id) {
+		const project = await api.projects.read(id);
+		if (!project) return null;
+
+		const shapes = await this.loadShapes(id);
+		return {project, shapes};
+	},
 	async createProject(model) {
 		const item = project.modify(model);
 		item.id = await api.projects.create(item);
@@ -38,7 +37,11 @@ export default {
 // 	async deleteProject(id) {
 // 		return await api.removeProject(id);
 // 	},
-//
+
+	async loadShapes(projectId) {
+		const shapes = await api.shapes.readAll(projectId);
+		return shapes.sort(byNumberValue('index'));
+	},
 // 	async createShape(model, projectId) {
 // 		const item = shape.modify(model, projectId);
 // 		item.id = await api.addShape(item);

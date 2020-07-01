@@ -64,7 +64,7 @@ export default {
 	 * @param {Object|Array} source
 	 * @returns {Object|Array}
 	 */
-	deepClone(source) {
+	clone(source) {
 		return JSON.parse(JSON.stringify(source));
 	},
 
@@ -74,7 +74,7 @@ export default {
 	 * @param {Object|Array} target
 	 * @param {Object|Array} source
 	 */
-	deepResetValues(target, source) {
+	resetValues(target, source) {
 		resetValues(target, source);
 	},
 
@@ -83,7 +83,7 @@ export default {
 	 * @param {Object|Array} b
 	 * @returns {Boolean}
 	 */
-	deepEqual(a, b) {
+	equal(a, b) {
 		return equal(a, b);
 	}
 }
