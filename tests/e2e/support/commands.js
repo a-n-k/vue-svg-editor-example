@@ -19,7 +19,7 @@ Cypress.Commands.add('createProject', function () {
 	cy.visit('/');
 	cy.clearDB();
 	cy.visit('/projects');
-	cy.get('div.toolbar input').type(newProjectName);
-	cy.get('div.toolbar button').click();
+	cy.get('div.new-project input').type(newProjectName);
+	cy.get('div.new-project button').click();
 	cy.get('div.rr-link').click();
 });
