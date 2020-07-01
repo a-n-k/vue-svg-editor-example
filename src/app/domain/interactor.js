@@ -34,9 +34,9 @@ export default {
 // 		project.modified = Date.now();
 // 		return await api.modifyProject(project);
 // 	},
-// 	async deleteProject(id) {
-// 		return await api.removeProject(id);
-// 	},
+	async deleteProject(id) {
+		return await api.projects.delete(id);
+	},
 
 	async loadShapes(projectId) {
 		const shapes = await api.shapes.readAll(projectId);

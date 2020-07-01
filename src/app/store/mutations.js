@@ -1,6 +1,7 @@
 import interactor from '@/app/domain/interactor';
 import {mutations} from '@/app/store/types';
 import deep from '@/lib/modules/deep';
+import {byId} from '@/lib/modules/predicates';
 
 function createDuplicate(value) {
 	return {value, isChanged: false};
@@ -38,5 +39,10 @@ export default {
 	[mutations.ADD_NEW_PROJECT](state, item) {
 		state.projects.unshift(item);
 		state.newest.project = interactor.newestProjectEntity();
+	},
+	[mutations.REMOVE_PROJECT](state, projectId) {
+		const projects = state.projects,
+				index = projects.findIndex(byId(projectId));
+		projects.splice(index, 1);
 	}
 };

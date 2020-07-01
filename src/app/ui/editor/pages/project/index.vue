@@ -47,6 +47,9 @@
 	// import List from './list/index';
 	// import Preview from './preview/index';
 	// import Setting from './setting/index';
+	
+	const MSG_DELETE_PROJECT = 'Are you sure want to delete the project?';
+
 
 	// let originalShapes = [];
 	//
@@ -114,7 +117,7 @@
 		},
 		methods: {
 			...mapActions([
-				actions.LOAD_PROJECT
+				actions.LOAD_PROJECT, actions.DELETE_PROJECT
 			]),
 
 			// newShape() {
@@ -142,8 +145,9 @@
 			// 	this.figure = null;
 			// },
 			async onProjectRemove() {
-				// 	await interactor.deleteProject(this.project.id);
-				// 	this.$router.push('/projects');
+				if (!confirm(MSG_DELETE_PROJECT)) return;
+				await this[actions.DELETE_PROJECT]();
+				this.$router.push('/projects');
 			},
 			// onSizeChanged(info) {
 			// 	changesManager.size = info.value ? info.size : null;

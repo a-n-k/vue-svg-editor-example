@@ -27,5 +27,11 @@ export default {
 		const model = state.newest.project,
 				item = await interactor.createProject(model);
 		commit(mutations.ADD_NEW_PROJECT, item);
+	},
+	async [actions.DELETE_PROJECT]({commit, state}) {
+		const projectId = state.current.original.project.id;
+		await interactor.deleteProject(projectId);
+		commit(mutations.REMOVE_PROJECT, projectId);
+		commit(mutations.RESET_PROJECT);
 	}
 };
