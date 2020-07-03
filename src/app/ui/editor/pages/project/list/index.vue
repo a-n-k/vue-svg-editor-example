@@ -1,74 +1,61 @@
 <template lang="pug">
-	widget.list
-		template(#tools)
-			span.icon.trash(title="Delete Figure"
-				:class="{disabled:!isSelected}"
-				@click.prevent="onDelete"
-			)
-			span.icon.plus(title="Add Figure"
-				:class="{disabled:isNew}"
-				@click.prevent="onAdd"
-			)
-		template(#main)
-			div(v-if="shapes.length")
-				item(v-for="item in shapes" :key="item.id"
-					:value="item" :current="figure"
-					@selected="onShapeSelected"
-				)
-			div.empty-msg.empty(v-else)
-				p Figures are not exists
-				p.add Please add new figure from toolbar above
-			//div.modal(v-if="isNew")
-				div.content
-					div.close
-						button(@click="cancel") &times;
-					form
-						select(v-model="model.type" @change="onTypeSelected")
-							option(disabled value="") Select shape type
-							option(v-for="tp in types" :value="tp") {{tp}}
+	div.list
+		//div(v-if="shapes.length")
+			//item(v-for="item in shapes" :key="item.value.id"
+				//:info="item" :current="figure"
+				//@selected="onShapeSelected"
+		//)
+		//div.empty-msg.empty(v-else)
+			p Shapes are not exists
+			p.add Please add new shape from toolbar above
+
+		//template(#tools)
+			//span.icon.trash(title="Delete Figure"
+				//:class="{disabled:!isSelected}"
+				//@click.prevent="onDelete"
+			//)
+		//template(#main)
+			//div(v-if="shapes.length")
+				//item(v-for="item in shapes" :key="item.id"
+					//:value="item" :current="figure"
+					//@selected="onShapeSelected"
+				//)
+
 </template>
 
 <script>
-	import Widget from '../widget';
+	import {mapGetters, mapActions, mapMutations} from 'vuex';
+	import {getters, actions, mutations} from '@/app/store/types';
 	import Item from './item';
 
-	const
-			MSG_DELETE_FIGURE = 'Are you sure want to delete the figure?';
+	const INFO = getters.CURRENT_INFO;
 
 	export default {
 		name: "list",
-		components: {Widget, Item},
-		props: ['shapes', 'figure', 'newShape', 'changeShape', 'types'],
-		data() {
-			return {isNew: false, model: {}};
-		},
+		components: {Item},
+		// props: [  'newShape', 'changeShape']
 		computed: {
-			isSelected() {
-				return !!this.figure;
-			}
+			// ...mapGetters([INFO]),
+			// shapes() {
+			// 	return this[INFO].shapes;
+			// },
+			// figure(){
+			// 	return this[INFO].figure;
+			// }
+			// isSelected() {
+			// 	return !!this.figure;
+			// }
 		},
 		methods: {
-			onDelete(/* event */) {
-				if (!this.isSelected) return;
-				if (confirm(MSG_DELETE_FIGURE)) {
-					this.$emit('remove');
-				}
-			},
-			onAdd(/* event */) {
-				if (this.isNew) return;
-				this.model = this.newShape();
-				this.isNew = true;
-			},
-			cancel(/* event */) {
-				this.isNew = false;
-			},
-			onTypeSelected(/* event */) {
-				this.isNew = false;
-				this.$emit('type', this.model);
-			},
-			onShapeSelected(item) {
-				this.$emit('change', item);
-			}
+			// onDelete(/* event */) {
+			// 	if (!this.isSelected) return;
+			// 	if (confirm(MSG_DELETE_FIGURE)) {
+			// 		this.$emit('remove');
+			// 	}
+			// },
+			// onShapeSelected(item) {
+			// 	// 	this.figure = item;
+			// }
 		}
 	}
 </script>

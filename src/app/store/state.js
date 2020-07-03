@@ -7,11 +7,11 @@ export default {
 	},
 	current: {
 		original: {
-			project: null, shapes: []
+			project: null, shapes: [], figure: null
 		},
 		// {value: project or shape entity, isChanged: false}
 		duplicate: {
-			project: null, shapes: []
+			project: null, shapes: [], figure: null
 		}
 	}
 }

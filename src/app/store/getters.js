@@ -1,14 +1,17 @@
 import {getters} from '@/app/store/types';
-
+import interactor from '@/app/domain/interactor';
 
 export default {
-	[getters.NEWEST_PROJECT_ENTITY](state) {
-		return state.newest.project;
-	},
 	[getters.PROJECTS](state) {
 		return state.projects;
 	},
-	[getters.CURRENT_PROJECT](state) {
-		return state.current.duplicate.project;
+	[getters.SHAPE_TYPES]() {
+		return interactor.shapeTypes();
+	},
+	[getters.NEWEST_ENTITIES](state) {
+		return state.newest;
+	},
+	[getters.CURRENT_INFO](state) {
+		return state.current.duplicate;
 	}
 }

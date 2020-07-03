@@ -33,5 +33,13 @@ export default {
 		await interactor.deleteProject(projectId);
 		commit(mutations.REMOVE_PROJECT, projectId);
 		commit(mutations.RESET_PROJECT);
+	},
+
+	async [actions.CREATE_NEW_SHAPE]({commit, state}, info) {
+		const current = state.current.original,
+				projectId = current.project.id,
+				shapesLength = current.shapes.length,
+				shape = await interactor.createShape(info, projectId, shapesLength);
+		commit(mutations.ADD_NEW_SHAPE, shape);
 	}
 };

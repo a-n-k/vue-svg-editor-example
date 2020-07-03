@@ -1,30 +1,22 @@
 <template lang="pug">
 	div.toolbar.flex-v-center
-		div.flex-l-inline.tb-item
+		div.flex-l-inline
 			span Shape
 			button(title="Delete Shape"
 				:disabled="!isShapeSelected"
 				@click.prevent="onShapeRemove"
-			)
-				span.icon.trash
+			): span.icon.trash
 			form
-				//select(v-model="model.type" @change="onTypeSelected")
-					option(disabled value="") Select shape type
-					option(v-for="tp in types" :value="tp") {{tp}}
 				select(@change="onShapeAdd")
 					option(disabled selected value="") Add New
-					option() A
-					option() B
-					option() C
-					option() D
+					option(v-for="(st,i) in shapeTypes" :value="i") {{st.name}}
 		div.tb-sep
-		div.flex-l-inline.tb-item
+		div.flex-l-inline
 			span Canvas
 			button(title="Reset Size"
 				:disabled="!isSizeChanged"
 				@click.prevent="onResetSize"
-			)
-				span.icon.reset
+			): span.icon.reset
 			form
 				div.field
 					label width
@@ -33,13 +25,22 @@
 					label height
 						input.ipt(type="text" )
 		div.tb-sep
-		div.flex-l-inline.tb-item
+		div.flex-l-inline
 			button.save-all(:disabled="!needSave" @click="onSaveAll") Save All
 </template>
 
 <script>
+	import {mapGetters, mapActions /*, mapMutations*/} from 'vuex';
+	import {getters, actions} from '@/app/store/types';
+
+	const
+			MSG_DELETE_FIGURE = 'Are you sure want to delete the figure?',
+			SHAPE_TYPES = getters.SHAPE_TYPES,
+			CREATE_NEW_SHAPE = actions.CREATE_NEW_SHAPE;
+
 	export default {
 		computed: {
+			...mapGetters([SHAPE_TYPES]),
 			isShapeSelected() {
 				// return !!this.figure;
 				return false; // todo
@@ -52,11 +53,18 @@
 			}
 		},
 		methods: {
+			...mapActions([CREATE_NEW_SHAPE]),
 			onShapeRemove(/* event */) {
 				console.log('onShapeRemove') // TODO
 			},
-			onShapeAdd(/* event */) {
-				console.log('onShapeAdd') // TODO
+			async onShapeAdd(event) {
+				const element = event.target,
+						value = element.value;
+				if (value === '') return;
+
+				const info = this[SHAPE_TYPES][Number(value)];
+				await this[CREATE_NEW_SHAPE](info);
+				element.value = ''
 			},
 			onResetSize(/* event */) {
 				console.log('onResetSize') // TODO
@@ -72,15 +80,8 @@
 	@import "~@/app/ui/base/scss/index.scss";
 
 	.toolbar {
-		height: 29px;
-		padding: $padding;
-		margin-top: $padding;
-		border-top: $border;
+		padding: 7px $padding;
 		border-bottom: $border;
-	}
-
-	.tb-item {
-		padding: $padding 0;
 	}
 
 	select {

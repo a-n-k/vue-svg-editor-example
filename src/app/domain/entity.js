@@ -25,9 +25,6 @@ const CIRCLE = 'circle', ELLIPSE = 'ellipse',
 		};
 
 export const shape = {
-	types: [
-		CIRCLE, ELLIPSE, LINE, RECTANGLE, TEXT
-	],
 	options: {
 		[CIRCLE]: {
 			cx: WIDTH / 2, cy: HEIGHT / 2, r: 20,
@@ -56,11 +53,18 @@ export const shape = {
 			fill, stroke, font
 		}
 	},
-	newest: {type: '', index: 0},
-	modify(model, projectId) {
-		return Object.assign({
-			projectId: projectId,
-			options: this.options[model.type]
-		}, model);
+	newest: {type: '', name: '', index: 0},
+	indexStep: 5,
+	modify(info, projectId, shapesLength) {
+		const dbEntity = Object.assign(
+				{
+					projectId,
+					options: this.options[info.type]
+				},
+				this.newest,
+				info
+		);
+		dbEntity.index = shapesLength * this.indexStep;
+		return dbEntity;
 	}
 };

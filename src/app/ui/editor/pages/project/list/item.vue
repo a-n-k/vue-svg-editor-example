@@ -2,27 +2,31 @@
 	div.item(:class="{selected:isSelected}" @click.prevent="onClick")
 		div.icon(:class="value.type")
 			span(v-if="value.type==='text'") T
-		div.type {{label}}
+		div.label {{label}}
 </template>
 
 <script>
 	export default {
 		name: 'item',
-		props: ['value', 'current'],
+		props: ['info', 'current'],
 		computed: {
+			value() {
+				return this.info.value;
+			},
 			label() {
 				const value = this.value;
-				return [value.type, value.index].join(' - ');
+				return [value.name, value.index].join(' - ');
 			},
 			isSelected() {
-				const shape = this.current;
-				return (shape && shape.id) === this.value.id;
+				const current = this.current;
+				if (!current) return false;
+				return current.value.id === this.value.id;
 			}
 		},
 		methods: {
 			onClick(/* event */) {
-				const value = this.isSelected ? null : this.value;
-				this.$emit('selected', value);
+				const info = this.isSelected ? null : this.info;
+				this.$emit('selected', info);
 			}
 		}
 	}
@@ -77,7 +81,7 @@
 		padding-left: 2px;
 	}
 
-	.type {
+	.label {
 		display: inline-flex;
 		margin: 0 0 0 20px;
 	}

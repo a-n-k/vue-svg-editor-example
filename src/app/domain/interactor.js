@@ -1,17 +1,15 @@
 import {api} from '../repository/local';
 import {project, shape} from './entity';
+import shapesInfo from './shapes-info';
 import {byNumberValue} from '@/lib/modules/predicates';
 
 export default {
 	newestProjectEntity() {
 		return Object.assign({}, project.newest);
 	},
-// 	newestShapeEntity() {
-// 		return Object.assign({}, shape.newest);
-// 	},
-// 	shapeTypes() {
-// 		return shape.types;
-// 	},
+	shapeTypes() {
+		return shapesInfo.types;
+	},
 
 	async loadProjects() {
 		const items = await api.projects.readAll();
@@ -42,11 +40,11 @@ export default {
 		const shapes = await api.shapes.readAll(projectId);
 		return shapes.sort(byNumberValue('index'));
 	},
-// 	async createShape(model, projectId) {
-// 		const item = shape.modify(model, projectId);
-// 		item.id = await api.addShape(item);
-// 		return item;
-// 	},
+	async createShape(info, projectId, shapesLength) {
+		const item = shape.modify(info, projectId, shapesLength);
+		item.id = await api.shapes.create(item);
+		return item;
+	},
 // 	async updateShape(shape) {
 // 		return await api.modifyShape(shape);
 // 	},

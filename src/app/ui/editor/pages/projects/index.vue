@@ -31,37 +31,39 @@
 	import {mapGetters, mapActions, mapMutations} from 'vuex';
 	import {getters, actions, mutations} from '@/app/store/types';
 
-	const BASE_LINK = '/project/';
+	const BASE_LINK = '/project/',
+			NEWEST_ENTITIES = getters.NEWEST_ENTITIES,
+			CHANGE_NEWEST_PROJECT = mutations.CHANGE_NEWEST_PROJECT,
+			LOAD_PROJECTS = actions.LOAD_PROJECTS,
+			CREATE_NEW_PROJECT = actions.CREATE_NEW_PROJECT;
 
 	export default {
 		name: "projects",
 		computed: {
 			...mapGetters([
-				getters.PROJECTS,
-				getters.NEWEST_PROJECT_ENTITY
+				getters.PROJECTS, NEWEST_ENTITIES
 			]),
 			model() {
-				return this[getters.NEWEST_PROJECT_ENTITY];
+				return this[NEWEST_ENTITIES].project;
 			}
 		},
 		methods: {
 			...mapActions([
-				actions.LOAD_PROJECTS,
-				actions.CREATE_NEW_PROJECT
+				LOAD_PROJECTS, CREATE_NEW_PROJECT
 			]),
-			...mapMutations([mutations.CHANGE_NEWEST_PROJECT]),
+			...mapMutations([CHANGE_NEWEST_PROJECT]),
 			link(id) {
 				return BASE_LINK + id;
 			},
 			onInputChange(event) {
-				this[mutations.CHANGE_NEWEST_PROJECT](event.target);
+				this[CHANGE_NEWEST_PROJECT](event.target);
 			},
 			async newProject() {
-				await this[actions.CREATE_NEW_PROJECT]();
+				await this[CREATE_NEW_PROJECT]();
 			}
 		},
 		async created() {
-			await this[actions.LOAD_PROJECTS]();
+			await this[LOAD_PROJECTS]();
 		}
 	}
 </script>

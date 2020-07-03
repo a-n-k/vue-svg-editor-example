@@ -33,8 +33,8 @@ export default {
 		duplicate.project = null;
 		duplicate.shapes = [];
 	},
-	[mutations.CHANGE_NEWEST_PROJECT](state, input) {
-		state.newest.project[input.name] = input.value;
+	[mutations.CHANGE_NEWEST_PROJECT](state, {name, value}) {
+		state.newest.project[name] = value;
 	},
 	[mutations.ADD_NEW_PROJECT](state, item) {
 		state.projects.unshift(item);
@@ -44,5 +44,23 @@ export default {
 		const projects = state.projects,
 				index = projects.findIndex(byId(projectId));
 		projects.splice(index, 1);
-	}
+	},
+
+	[mutations.ADD_NEW_SHAPE](state, value) {
+		const current = state.current,
+				original = current.original;
+		original.shapes.push(value);
+		original.figure = value;
+
+		const duplicate = current.duplicate,
+				clone = deep.clone(value);
+		duplicate.shapes.push(clone);
+		duplicate.figure = clone;
+	},
+	// [mutations.SET_FIGURE](state, item) {
+	// 	const current = state.current;
+	// 	current.duplicate.figure = item;
+	// 	const original = current.original;
+	// 	original.figure = original.shapes.find(byId(item.id));
+	// }
 };

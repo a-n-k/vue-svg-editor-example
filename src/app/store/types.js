@@ -1,7 +1,8 @@
 export const getters = {
 	PROJECTS: 'projects',
-	NEWEST_PROJECT_ENTITY: 'newestProjectEntity',
-	CURRENT_PROJECT: 'currentProject'
+	NEWEST_ENTITIES: 'newestEntities',
+	SHAPE_TYPES: 'shapeTypes',
+	CURRENT_INFO: 'currentInfo'
 };
 
 export const mutations = {
@@ -10,12 +11,14 @@ export const mutations = {
 	RESET_PROJECT: 'resetProject',
 	CHANGE_NEWEST_PROJECT: 'changeNewestProject',
 	ADD_NEW_PROJECT: 'addNewProject',
-	REMOVE_PROJECT: 'removeProject'
+	REMOVE_PROJECT: 'removeProject',
+	ADD_NEW_SHAPE: 'addNewShape'
 };
 
 export const actions = {
 	LOAD_PROJECTS: 'loadProjects',
 	LOAD_PROJECT: 'loadProject',
 	CREATE_NEW_PROJECT: 'createNewProject',
-	DELETE_PROJECT: 'deleteProject'
+	DELETE_PROJECT: 'deleteProject',
+	CREATE_NEW_SHAPE: 'createNewShape'
 };
