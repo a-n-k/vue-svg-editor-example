@@ -18,48 +18,40 @@
 				div.clm
 					input.ipt(
 						type="text" placeholder="Project Name"
-						name="name" :value="model.name"
+						v-model.lazy.trim="model.name"
 						required pattern="[A-Za-z0-9 ]{3,50}"
 						title="Only letters, numbers and spaces. Length is min:3, max:50"
-						@change="onInputChange"
 					)
 				div.clm
 					button.btn(type="submit") Create New Project
 </template>
 
 <script>
-	import {mapGetters, mapActions, mapMutations} from 'vuex';
-	import {getters, actions, mutations} from '@/app/store/types';
+	import {mapGetters, mapActions} from 'vuex';
+	import {getters, actions} from '@/app/store/types';
 
 	const BASE_LINK = '/project/',
-			NEWEST_ENTITIES = getters.NEWEST_ENTITIES,
-			CHANGE_NEWEST_PROJECT = mutations.CHANGE_NEWEST_PROJECT,
 			LOAD_PROJECTS = actions.LOAD_PROJECTS,
 			CREATE_NEW_PROJECT = actions.CREATE_NEW_PROJECT;
 
 	export default {
 		name: "projects",
+		data() {
+			return {model: {name: ''}};
+		},
 		computed: {
-			...mapGetters([
-				getters.PROJECTS, NEWEST_ENTITIES
-			]),
-			model() {
-				return this[NEWEST_ENTITIES].project;
-			}
+			...mapGetters([getters.PROJECTS])
 		},
 		methods: {
 			...mapActions([
 				LOAD_PROJECTS, CREATE_NEW_PROJECT
 			]),
-			...mapMutations([CHANGE_NEWEST_PROJECT]),
 			link(id) {
 				return BASE_LINK + id;
 			},
-			onInputChange(event) {
-				this[CHANGE_NEWEST_PROJECT](event.target);
-			},
 			async newProject() {
-				await this[CREATE_NEW_PROJECT]();
+				await this[CREATE_NEW_PROJECT](this.model);
+				this.model.name = '';
 			}
 		},
 		async created() {

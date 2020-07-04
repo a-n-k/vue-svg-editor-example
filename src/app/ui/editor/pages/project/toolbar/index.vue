@@ -64,7 +64,7 @@
 
 				const info = this[SHAPE_TYPES][Number(value)];
 				await this[CREATE_NEW_SHAPE](info);
-				element.value = ''
+				element.value = '';
 			},
 			onResetSize(/* event */) {
 				console.log('onResetSize') // TODO

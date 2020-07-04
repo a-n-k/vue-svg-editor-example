@@ -4,9 +4,6 @@ import shapesInfo from './shapes-info';
 import {byNumberValue} from '@/lib/modules/predicates';
 
 export default {
-	newestProjectEntity() {
-		return Object.assign({}, project.newest);
-	},
 	shapeTypes() {
 		return shapesInfo.types;
 	},

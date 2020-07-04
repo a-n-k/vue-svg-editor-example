@@ -23,9 +23,8 @@ export default {
 		}
 		commit(mutations.SET_PROJECT, {project, shapes});
 	},
-	async [actions.CREATE_NEW_PROJECT]({commit, state}) {
-		const model = state.newest.project,
-				item = await interactor.createProject(model);
+	async [actions.CREATE_NEW_PROJECT]({commit, state}, model) {
+		const item = await interactor.createProject(model);
 		commit(mutations.ADD_NEW_PROJECT, item);
 	},
 	async [actions.DELETE_PROJECT]({commit, state}) {

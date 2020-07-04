@@ -1,6 +1,5 @@
 export const getters = {
 	PROJECTS: 'projects',
-	NEWEST_ENTITIES: 'newestEntities',
 	SHAPE_TYPES: 'shapeTypes',
 	CURRENT_INFO: 'currentInfo'
 };
@@ -9,7 +8,6 @@ export const mutations = {
 	SET_PROJECTS: 'setProjects',
 	SET_PROJECT: 'setProject',
 	RESET_PROJECT: 'resetProject',
-	CHANGE_NEWEST_PROJECT: 'changeNewestProject',
 	ADD_NEW_PROJECT: 'addNewProject',
 	REMOVE_PROJECT: 'removeProject',
 	ADD_NEW_SHAPE: 'addNewShape'

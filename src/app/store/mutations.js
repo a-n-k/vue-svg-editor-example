@@ -1,4 +1,3 @@
-import interactor from '@/app/domain/interactor';
 import {mutations} from '@/app/store/types';
 import deep from '@/lib/modules/deep';
 import {byId} from '@/lib/modules/predicates';
@@ -33,12 +32,8 @@ export default {
 		duplicate.project = null;
 		duplicate.shapes = [];
 	},
-	[mutations.CHANGE_NEWEST_PROJECT](state, {name, value}) {
-		state.newest.project[name] = value;
-	},
 	[mutations.ADD_NEW_PROJECT](state, item) {
 		state.projects.unshift(item);
-		state.newest.project = interactor.newestProjectEntity();
 	},
 	[mutations.REMOVE_PROJECT](state, projectId) {
 		const projects = state.projects,

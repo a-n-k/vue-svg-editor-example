@@ -8,9 +8,6 @@ export default {
 	[getters.SHAPE_TYPES]() {
 		return interactor.shapeTypes();
 	},
-	[getters.NEWEST_ENTITIES](state) {
-		return state.newest;
-	},
 	[getters.CURRENT_INFO](state) {
 		return state.current.duplicate;
 	}
