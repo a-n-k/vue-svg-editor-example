@@ -10,7 +10,8 @@ export const mutations = {
 	RESET_PROJECT: 'resetProject',
 	ADD_NEW_PROJECT: 'addNewProject',
 	REMOVE_PROJECT: 'removeProject',
-	ADD_NEW_SHAPE: 'addNewShape'
+	ADD_NEW_SHAPE: 'addNewShape',
+	SET_SHAPES: 'setShapes'
 };
 
 export const actions = {
@@ -18,5 +19,6 @@ export const actions = {
 	LOAD_PROJECT: 'loadProject',
 	CREATE_NEW_PROJECT: 'createNewProject',
 	DELETE_PROJECT: 'deleteProject',
-	CREATE_NEW_SHAPE: 'createNewShape'
+	CREATE_NEW_SHAPE: 'createNewShape',
+	LOAD_SHAPES: 'loadShapes'
 };

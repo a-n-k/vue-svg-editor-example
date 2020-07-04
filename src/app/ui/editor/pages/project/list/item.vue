@@ -18,9 +18,9 @@
 				return [value.name, value.index].join(' - ');
 			},
 			isSelected() {
-				const current = this.current;
-				if (!current) return false;
-				return current.value.id === this.value.id;
+				// const current = this.current;
+				// if (!current) return false;
+				// return current.value.id === this.value.id;
 			}
 		},
 		methods: {

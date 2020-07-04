@@ -32,6 +32,7 @@ export default {
 	[mutations.REMOVE_PROJECT](state, projectId) {
 		const projects = state.projects,
 				index = projects.findIndex(byId(projectId));
+		if (index < 0) return;
 		projects.splice(index, 1);
 	},
 
@@ -42,9 +43,18 @@ export default {
 		original.figure = value;
 
 		const duplicate = current.duplicate,
-				clone = deep.clone(value);
+				clone = createDuplicate(deep.clone(value));
 		duplicate.shapes.push(clone);
 		duplicate.figure = clone;
+	},
+	[mutations.SET_SHAPES](state, items) {
+		const original = state.current.original
+		original.shapes = items;
+
+		const duplicate = state.current.duplicate;
+		duplicate.shapes = items.map(function (shape) {
+			return createDuplicate(deep.clone(shape));
+		});
 	},
 	// [mutations.SET_FIGURE](state, item) {
 	// 	const current = state.current;

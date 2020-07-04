@@ -17,21 +17,6 @@ export default {
 			}
 		}
 		commit(mutations.SET_PROJECT, project);
-
-		// let project = state.projects.find(byId(id)),
-		// 		shapes = [];
-		// if (project) {
-		// 	shapes = await interactor.loadShapes(id);
-		// } else {
-		// 	const info = await interactor.loadProject(id);
-		// 	if (!info) {
-		// 		commit(mutations.RESET_PROJECT);
-		// 		return;
-		// 	}
-		// 	project = info.project;
-		// 	shapes = info.shapes;
-		// }
-		// commit(mutations.SET_PROJECT, {project, shapes});
 	},
 	async [actions.CREATE_NEW_PROJECT]({commit, state}, model) {
 		const item = await interactor.createProject(model);
@@ -50,5 +35,10 @@ export default {
 				shapesLength = current.shapes.length,
 				shape = await interactor.createShape(info, projectId, shapesLength);
 		commit(mutations.ADD_NEW_SHAPE, shape);
+	},
+	async [actions.LOAD_SHAPES]({commit, state}) {
+		const projectId = state.current.original.project.id;
+		const items = await interactor.loadShapes(projectId);
+		commit(mutations.SET_SHAPES, items)
 	}
 };

@@ -14,10 +14,7 @@
 		toolbar
 		div.frame
 			div.column
-				//list(
-
-					// @remove="onShapeRemove"
-				//)
+				list
 			div.column.clm-center
 				//preview(
 					//:shapes="shapes" :size="size" :needSave="isChanged"
