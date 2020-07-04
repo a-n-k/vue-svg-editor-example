@@ -14,11 +14,7 @@ export default {
 		return items;
 	},
 	async loadProject(id) {
-		const project = await api.projects.read(id);
-		if (!project) return null;
-
-		const shapes = await this.loadShapes(id);
-		return {project, shapes};
+		return await api.projects.read(id);
 	},
 	async createProject(model) {
 		const item = project.modify(model);

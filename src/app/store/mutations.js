@@ -10,18 +10,12 @@ export default {
 	[mutations.SET_PROJECTS](state, items) {
 		state.projects = items;
 	},
-	[mutations.SET_PROJECT](state, info) {
-		const original = state.current.original,
-				project = info.project,
-				shapes = info.shapes;
+	[mutations.SET_PROJECT](state, project) {
+		const original = state.current.original;
 		original.project = project;
-		original.shapes = shapes;
 
 		const duplicate = state.current.duplicate;
 		duplicate.project = createDuplicate(deep.clone(project));
-		duplicate.shapes = shapes.map(function (shape) {
-			return createDuplicate(deep.clone(shape));
-		});
 	},
 	[mutations.RESET_PROJECT](state) {
 		const original = state.current.original;

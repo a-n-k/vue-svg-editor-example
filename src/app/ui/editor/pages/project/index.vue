@@ -44,7 +44,11 @@
 	// import Preview from './preview/index';
 	// import Setting from './setting/index';
 
-	const MSG_DELETE_PROJECT = 'Are you sure want to delete the project?';
+	const
+			MSG_DELETE_PROJECT = 'Are you sure want to delete the project?',
+			CURRENT_INFO = getters.CURRENT_INFO,
+			LOAD_PROJECT = actions.LOAD_PROJECT,
+			DELETE_PROJECT = actions.DELETE_PROJECT;
 
 
 	// const shapeUtils = {
@@ -74,11 +78,9 @@
 		// 	};
 		// },
 		computed: {
-			...mapGetters([
-				getters.CURRENT_INFO
-			]),
+			...mapGetters([CURRENT_INFO]),
 			project() {
-				const current = this[getters.CURRENT_INFO].project;
+				const current = this[CURRENT_INFO].project;
 				return (current && current.value);
 			}
 			// shapeOriginal() {
@@ -92,7 +94,7 @@
 		},
 		methods: {
 			...mapActions([
-				actions.LOAD_PROJECT, actions.DELETE_PROJECT
+				LOAD_PROJECT, DELETE_PROJECT
 			]),
 
 
@@ -105,7 +107,7 @@
 			// },
 			async onProjectRemove() {
 				if (!confirm(MSG_DELETE_PROJECT)) return;
-				await this[actions.DELETE_PROJECT]();
+				await this[DELETE_PROJECT]();
 				this.$router.push('/projects');
 			},
 			// onSizeChanged(info) {
@@ -139,7 +141,7 @@
 		},
 		async created() {
 			const projectId = Number(this.$route.params.id);
-			await this[actions.LOAD_PROJECT](projectId);
+			await this[LOAD_PROJECT](projectId);
 		},
 		watch: {
 			project(value) {
