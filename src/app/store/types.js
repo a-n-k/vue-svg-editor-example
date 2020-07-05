@@ -12,7 +12,8 @@ export const mutations = {
 	REMOVE_PROJECT: 'removeProject',
 	ADD_NEW_SHAPE: 'addNewShape',
 	SET_SHAPES: 'setShapes',
-	SET_FIGURE: 'setFigure'
+	SET_FIGURE: 'setFigure',
+	REMOVE_SHAPE: 'removeShape'
 };
 
 export const actions = {
@@ -21,5 +22,6 @@ export const actions = {
 	CREATE_NEW_PROJECT: 'createNewProject',
 	DELETE_PROJECT: 'deleteProject',
 	CREATE_NEW_SHAPE: 'createNewShape',
-	LOAD_SHAPES: 'loadShapes'
+	LOAD_SHAPES: 'loadShapes',
+	DELETE_SHAPE: 'deleteShape'
 };

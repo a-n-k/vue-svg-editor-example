@@ -1,5 +1,5 @@
 describe('editor partition - project page - list component', function () {
-	before(function () {
+	beforeEach(function () {
 		cy.createProject();
 	});
 
@@ -23,5 +23,13 @@ describe('editor partition - project page - list component', function () {
 		item().should('not.have.class', 'selected');
 		item().click();
 		item().should('have.class', 'selected');
+	});
+
+	it('should has ability to manage shapes', function () {
+		cy.get('div.list div.empty-msg');
+		cy.createShape();
+		item().should('have.class', 'selected');
+		cy.deleteShape();
+		cy.get('div.list div.empty-msg');
 	});
 });

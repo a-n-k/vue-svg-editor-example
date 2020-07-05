@@ -8,13 +8,6 @@
 		div.empty-msg.empty(v-else)
 			p Shapes are not exists
 			p.add Please add new shape from toolbar above
-
-		//template(#tools)
-			//span.icon.trash(title="Delete Figure"
-				//:class="{disabled:!isSelected}"
-				//@click.prevent="onDelete"
-			//)
-
 </template>
 
 <script>
@@ -35,15 +28,7 @@
 			}
 		},
 		methods: {
-			...mapActions([LOAD_SHAPES]),
-
-
-			// onDelete(/* event */) {
-			// 	if (!this.isSelected) return;
-			// 	if (confirm(MSG_DELETE_FIGURE)) {
-			// 		this.$emit('remove');
-			// 	}
-			// }
+			...mapActions([LOAD_SHAPES])
 		},
 		async created() {
 			await this[LOAD_SHAPES]();

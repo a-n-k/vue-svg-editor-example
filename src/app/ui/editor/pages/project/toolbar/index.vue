@@ -34,16 +34,17 @@
 	import {getters, actions} from '@/app/store/types';
 
 	const
-			MSG_DELETE_FIGURE = 'Are you sure want to delete the figure?',
+			MSG_DELETE_SHAPE = 'Are you sure want to delete the shape?',
 			SHAPE_TYPES = getters.SHAPE_TYPES,
-			CREATE_NEW_SHAPE = actions.CREATE_NEW_SHAPE;
+			CURRENT_INFO = getters.CURRENT_INFO,
+			CREATE_NEW_SHAPE = actions.CREATE_NEW_SHAPE,
+			DELETE_SHAPE = actions.DELETE_SHAPE;
 
 	export default {
 		computed: {
-			...mapGetters([SHAPE_TYPES]),
+			...mapGetters([SHAPE_TYPES, CURRENT_INFO]),
 			isShapeSelected() {
-				// return !!this.figure;
-				return false; // todo
+				return !!this[CURRENT_INFO].figure;
 			},
 			isSizeChanged() {
 				return false; // todo
@@ -53,9 +54,10 @@
 			}
 		},
 		methods: {
-			...mapActions([CREATE_NEW_SHAPE]),
+			...mapActions([CREATE_NEW_SHAPE, DELETE_SHAPE]),
 			onShapeRemove(/* event */) {
-				console.log('onShapeRemove') // TODO
+				if (!confirm(MSG_DELETE_SHAPE)) return;
+				this[DELETE_SHAPE]();
 			},
 			async onShapeAdd(event) {
 				const element = event.target,

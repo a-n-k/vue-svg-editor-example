@@ -30,15 +30,22 @@ export default {
 	},
 
 	async [actions.CREATE_NEW_SHAPE]({commit, state}, info) {
-		const current = state.current.original,
-				projectId = current.project.id,
-				shapesLength = current.shapes.length,
-				shape = await interactor.createShape(info, projectId, shapesLength);
+		const {project, shapes} = state.current.original,
+				projectId = project.id,
+				shapesLength = shapes.length,
+				lastIndex = shapesLength ? shapes[shapesLength - 1].index : 0,
+				shape = await interactor.createShape(info, projectId, lastIndex);
 		commit(mutations.ADD_NEW_SHAPE, shape);
 	},
 	async [actions.LOAD_SHAPES]({commit, state}) {
 		const projectId = state.current.original.project.id;
 		const items = await interactor.loadShapes(projectId);
 		commit(mutations.SET_SHAPES, items)
+	},
+	async [actions.DELETE_SHAPE]({commit, state}) {
+		const shapetId = state.current.original.figure.id;
+		await interactor.deleteShape(shapetId);
+		commit(mutations.REMOVE_SHAPE, shapetId);
+		commit(mutations.SET_FIGURE, null);
 	}
 };

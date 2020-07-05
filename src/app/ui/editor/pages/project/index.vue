@@ -47,30 +47,11 @@
 			LOAD_PROJECT = actions.LOAD_PROJECT,
 			DELETE_PROJECT = actions.DELETE_PROJECT;
 
-
-	// const shapeUtils = {
-	// 	remove(id, copyShapes) {
-	// 		const by = this.by;
-	//
-	// 		let index = originalShapes.findIndex(by(id));
-	// 		originalShapes.splice(index, 1);
-	//
-	// 		index = copyShapes.findIndex(by(id));
-	// 		copyShapes.splice(index, 1);
-	//
-	// 		index = changesManager.shapes.findIndex(by(id));
-	// 		if (index >= 0) {
-	// 			changesManager.shapes.splice(index, 1);
-	// 		}
-	// 	}
-	// };
-
 	export default {
 		name: "project",
 		components: {Toolbar, List /*, Preview, Setting */},
 		// data() {
 		// 	return {
-		// 		project: null, shapes: [], figure: null,
 		// 		isChanged: false
 		// 	};
 		// },
@@ -80,10 +61,6 @@
 				const current = this[CURRENT_INFO].project;
 				return (current && current.value);
 			}
-			// shapeOriginal() {
-			// 	const figure = this.figure;
-			// 	return figure ? originalShapes.find(shapeUtils.by(figure.id)) : null;
-			// },
 			// size() {
 			// 	const project = this.project;
 			// 	return project ? project.size : {};
@@ -93,15 +70,6 @@
 			...mapActions([
 				LOAD_PROJECT, DELETE_PROJECT
 			]),
-
-
-			// async onShapeRemove() {
-			// 	const shapeId = this.figure.id;
-			// 	await interactor.deleteShape(shapeId);
-			// 	shapeUtils.remove(shapeId, this.shapes);
-			// 	this.isChanged = changesManager.isChanged();
-			// 	this.figure = null;
-			// },
 			async onProjectRemove() {
 				if (!confirm(MSG_DELETE_PROJECT)) return;
 				await this[DELETE_PROJECT]();

@@ -27,3 +27,7 @@ Cypress.Commands.add('createProject', function () {
 Cypress.Commands.add('createShape', function () {
 	cy.get('div.toolbar select').select('0');
 });
+
+Cypress.Commands.add('deleteShape', function () {
+	cy.get('div.toolbar button:has(> span.icon.trash)').click();
+});

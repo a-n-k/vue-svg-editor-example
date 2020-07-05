@@ -33,15 +33,15 @@ export default {
 		const shapes = await api.shapes.readAll(projectId);
 		return shapes.sort(byNumberValue('index'));
 	},
-	async createShape(info, projectId, shapesLength) {
-		const item = shape.modify(info, projectId, shapesLength);
+	async createShape(info, projectId, lastIndex) {
+		const item = shape.modify(info, projectId, lastIndex);
 		item.id = await api.shapes.create(item);
 		return item;
 	},
 // 	async updateShape(shape) {
 // 		return await api.modifyShape(shape);
 // 	},
-// 	async deleteShape(id) {
-// 		return await api.removeShape(id);
-// 	}
+	async deleteShape(id) {
+		return await api.shapes.delete(id);
+	}
 }

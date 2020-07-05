@@ -11,7 +11,9 @@ img {
 	border-style: none;
 }
 
-button:focus, input[type=submit]:focus {
+button:focus,
+input[type=submit]:focus,
+select:focus {
 	outline: none;
 	box-shadow: none;
 }

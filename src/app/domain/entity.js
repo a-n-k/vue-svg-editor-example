@@ -55,7 +55,7 @@ export const shape = {
 	},
 	newest: {type: '', name: '', index: 0},
 	indexStep: 5,
-	modify(info, projectId, shapesLength) {
+	modify(info, projectId, lastIndex) {
 		const dbEntity = Object.assign(
 				{
 					projectId,
@@ -64,7 +64,7 @@ export const shape = {
 				this.newest,
 				info
 		);
-		dbEntity.index = shapesLength * this.indexStep;
+		dbEntity.index = lastIndex + this.indexStep;
 		return dbEntity;
 	}
 };
