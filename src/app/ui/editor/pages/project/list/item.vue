@@ -1,15 +1,28 @@
 <template lang="pug">
-	div.item(:class="{selected:isSelected}" @click.prevent="onClick")
+	div.flex-v-center.item(
+		:class="{selected:isSelected}"
+		@click.prevent="onClick"
+	)
 		div.icon(:class="value.type")
 			span(v-if="value.type==='text'") T
 		div.label {{label}}
 </template>
 
 <script>
+	import {mapGetters, mapMutations} from 'vuex';
+	import {getters, mutations} from '@/app/store/types';
+
+	const CURRENT_INFO = getters.CURRENT_INFO,
+			SET_FIGURE = mutations.SET_FIGURE;
+
 	export default {
 		name: 'item',
-		props: ['info', 'current'],
+		props: ['info'],
 		computed: {
+			...mapGetters([CURRENT_INFO]),
+			current() {
+				return this[CURRENT_INFO].figure;
+			},
 			value() {
 				return this.info.value;
 			},
@@ -18,15 +31,16 @@
 				return [value.name, value.index].join(' - ');
 			},
 			isSelected() {
-				// const current = this.current;
-				// if (!current) return false;
-				// return current.value.id === this.value.id;
+				const current = this.current;
+				if (!current) return false;
+				return current.value.id === this.value.id;
 			}
 		},
 		methods: {
+			...mapMutations([SET_FIGURE]),
 			onClick(/* event */) {
 				const info = this.isSelected ? null : this.info;
-				this.$emit('selected', info);
+				this[SET_FIGURE](info);
 			}
 		}
 	}
@@ -36,18 +50,17 @@
 	$size: 20px;
 
 	.item {
-		display: flex;
 		margin: 5px 0;
 		padding: 5px 0 5px 10px;
 		cursor: pointer;
 	}
 
 	.item:hover {
-		background-color: #efefef;
+		background-color: #dddddd;
 	}
 
 	.selected {
-		background-color: #e1e1e1;
+		background-color: #cccccc;
 		font-weight: bold;
 	}
 

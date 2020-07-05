@@ -56,10 +56,10 @@ export default {
 			return createDuplicate(deep.clone(shape));
 		});
 	},
-	// [mutations.SET_FIGURE](state, item) {
-	// 	const current = state.current;
-	// 	current.duplicate.figure = item;
-	// 	const original = current.original;
-	// 	original.figure = original.shapes.find(byId(item.id));
-	// }
+	[mutations.SET_FIGURE](state, item) {
+		const current = state.current;
+		current.duplicate.figure = item;
+		const original = current.original;
+		original.figure = item && original.shapes.find(byId(item.value.id));
+	}
 };

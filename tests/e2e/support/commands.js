@@ -23,3 +23,7 @@ Cypress.Commands.add('createProject', function () {
 	cy.get('div.new-project button').click();
 	cy.get('div.rr-link').click();
 });
+
+Cypress.Commands.add('createShape', function () {
+	cy.get('div.toolbar select').select('0');
+});
