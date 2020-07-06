@@ -2,8 +2,20 @@ import {mutations} from '@/app/store/types';
 import deep from '@/lib/modules/deep';
 import {byId} from '@/lib/modules/predicates';
 
-function createDuplicate(value) {
-	return {value, isChanged: false};
+function createDuplicate(value, isProject = false) {
+	return {
+		value,
+		isChanged: isProject ? {size: false, shapes: false} : false
+	};
+}
+
+function getSizeInfo(state) {
+	const {original, duplicate} = state.current;
+	return {
+		originalSize: original.project.size,
+		duplicateProject: duplicate.project,
+		duplicateSize: duplicate.project.value.size
+	};
 }
 
 export default {
@@ -13,7 +25,7 @@ export default {
 	[mutations.SET_PROJECT](state, project) {
 		const {original, duplicate} = state.current;
 		original.project = project;
-		duplicate.project = createDuplicate(deep.clone(project));
+		duplicate.project = createDuplicate(deep.clone(project), true);
 	},
 	[mutations.RESET_PROJECT](state) {
 		const {original, duplicate} = state.current;
@@ -63,5 +75,16 @@ export default {
 		shapes = duplicate.shapes;
 		index = shapes.findIndex(byId(shapeId, 'value'));
 		shapes.splice(index, 1);
+	},
+
+	[mutations.CHANGE_SIZE](state, info) {
+		const {originalSize, duplicateProject, duplicateSize} = getSizeInfo(state);
+		duplicateSize[info.name] = info.value;
+		duplicateProject.isChanged.size = !deep.equal(originalSize, duplicateSize);
+	},
+	[mutations.RESET_SIZE](state) {
+		const {originalSize, duplicateProject, duplicateSize} = getSizeInfo(state);
+		deep.resetValues(duplicateSize, originalSize);
+		duplicateProject.isChanged.size = false;
 	}
 };

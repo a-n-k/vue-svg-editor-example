@@ -16,5 +16,6 @@ describe('editor partition - project page - layout', function () {
 		cy.get('div.header').get('span.name').should('contain', 'new project');
 		cy.get('div.toolbar').get('select');
 		cy.get('div.list');
+		cy.get('div.preview').get('div.svg-holder');
 	});
 });

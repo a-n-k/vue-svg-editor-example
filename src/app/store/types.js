@@ -13,7 +13,9 @@ export const mutations = {
 	ADD_NEW_SHAPE: 'addNewShape',
 	SET_SHAPES: 'setShapes',
 	SET_FIGURE: 'setFigure',
-	REMOVE_SHAPE: 'removeShape'
+	REMOVE_SHAPE: 'removeShape',
+	CHANGE_SIZE: 'changeSize',
+	RESET_SIZE: 'resetSize'
 };
 
 export const actions = {

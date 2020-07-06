@@ -27,4 +27,29 @@ describe('editor partition - project page - toolbar', function () {
 		btnDelShape().click();
 		btnDelShape().should('be.disabled');
 	});
+
+	function btnResetSize() {
+		return cy.get('div.toolbar button:has(> span.icon.reset)');
+	}
+
+	function iptWidth() {
+		return cy.get('div.toolbar input.ipt[name=width]');
+	}
+
+	function iptHeight() {
+		return cy.get('div.toolbar input.ipt[name=height]');
+	}
+
+	const initWidth = '240', initHeight = '240',
+			newWidth = '360', newHeight = '100';
+
+	it('should be able to change canvas size', function () {
+		btnResetSize().should('be.disabled');
+		iptWidth().should('has.value', initWidth);
+		iptHeight().should('has.value', initHeight);
+		iptWidth().type(newWidth);
+		iptHeight().type(newHeight);
+		btnResetSize().should('not.be.disabled').click();
+		btnResetSize().should('be.disabled');
+	});
 });

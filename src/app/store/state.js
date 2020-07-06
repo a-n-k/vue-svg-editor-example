@@ -4,9 +4,11 @@ export default {
 		original: {
 			project: null, shapes: [], figure: null
 		},
-		// {value: project or shape entity, isChanged: false}
 		duplicate: {
-			project: null, shapes: [], figure: null
+			// {value: project entity, isChanged: {size: false, shapes: false}}
+			project: null,
+			// {value: shape entity, isChanged: false}
+			shapes: [], figure: null
 		}
 	}
 }

@@ -20,25 +20,30 @@
 			form
 				div.field
 					label width
-						input.ipt(type="text" )
+						input.ipt(type="text"
+							name="width" :value="size.width"
+							@change="onChangeSize"
+						)
 				div.field
 					label height
-						input.ipt(type="text" )
+						input.ipt(type="text"
+							name="height" :value="size.height"
+							@change="onChangeSize"
+						)
 		div.tb-sep
 		div.flex-l-inline
 			button.save-all(:disabled="!needSave" @click="onSaveAll") Save All
 </template>
 
 <script>
-	import {mapGetters, mapActions /*, mapMutations*/} from 'vuex';
-	import {getters, actions} from '@/app/store/types';
+	import {mapGetters, mapActions, mapMutations} from 'vuex';
+	import {getters, actions, mutations} from '@/app/store/types';
 
 	const
 			MSG_DELETE_SHAPE = 'Are you sure want to delete the shape?',
-			SHAPE_TYPES = getters.SHAPE_TYPES,
-			CURRENT_INFO = getters.CURRENT_INFO,
-			CREATE_NEW_SHAPE = actions.CREATE_NEW_SHAPE,
-			DELETE_SHAPE = actions.DELETE_SHAPE;
+			{SHAPE_TYPES, CURRENT_INFO} = getters,
+			{CREATE_NEW_SHAPE, DELETE_SHAPE} = actions,
+			{CHANGE_SIZE, RESET_SIZE} = mutations;
 
 	export default {
 		computed: {
@@ -46,8 +51,16 @@
 			isShapeSelected() {
 				return !!this[CURRENT_INFO].figure;
 			},
+			project() {
+				return this[CURRENT_INFO].project;
+			},
+			size() {
+				const project = this.project;
+				return (project && project.value.size) || {};
+			},
 			isSizeChanged() {
-				return false; // todo
+				const project = this.project;
+				return (project && project.isChanged.size);
 			},
 			needSave() {
 				return false; // todo
@@ -55,6 +68,7 @@
 		},
 		methods: {
 			...mapActions([CREATE_NEW_SHAPE, DELETE_SHAPE]),
+			...mapMutations([CHANGE_SIZE, RESET_SIZE]),
 			onShapeRemove(/* event */) {
 				if (!confirm(MSG_DELETE_SHAPE)) return;
 				this[DELETE_SHAPE]();
@@ -69,7 +83,16 @@
 				element.value = '';
 			},
 			onResetSize(/* event */) {
-				console.log('onResetSize') // TODO
+				this[RESET_SIZE]();
+			},
+			onChangeSize(event) {
+				const {name, value} = event.target;
+				let numberValue = Number.parseInt(value);
+				if (isNaN(numberValue)) numberValue = 0;
+
+				this[CHANGE_SIZE]({
+					name, value: numberValue
+				});
 			},
 			onSaveAll(/* event */) {
 				console.log('onSaveAll') // TODO

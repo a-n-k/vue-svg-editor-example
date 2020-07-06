@@ -16,11 +16,7 @@
 			div.column
 				list
 			div.column.clm-center
-				//preview(
-					//:shapes="shapes" :size="size" :needSave="isChanged"
-					//@change="onSizeChanged" @remove="onProjectRemove"
-					//@save="onSaveAll"
-				//)
+				preview
 			div.column
 				//setting(
 					//:figure="figure" :original="shapeOriginal"
@@ -38,33 +34,23 @@
 	import {getters, actions, mutations} from '@/app/store/types';
 	import Toolbar from './toolbar';
 	import List from './list';
-	// import Preview from './preview/index';
+	import Preview from './preview';
 	// import Setting from './setting/index';
 
 	const
 			MSG_DELETE_PROJECT = 'Are you sure want to delete the project?',
-			CURRENT_INFO = getters.CURRENT_INFO,
-			LOAD_PROJECT = actions.LOAD_PROJECT,
-			DELETE_PROJECT = actions.DELETE_PROJECT;
+			{CURRENT_INFO} = getters,
+			{LOAD_PROJECT, DELETE_PROJECT} = actions;
 
 	export default {
 		name: "project",
-		components: {Toolbar, List /*, Preview, Setting */},
-		// data() {
-		// 	return {
-		// 		isChanged: false
-		// 	};
-		// },
+		components: {Toolbar, List, Preview /*, Setting */},
 		computed: {
 			...mapGetters([CURRENT_INFO]),
 			project() {
 				const current = this[CURRENT_INFO].project;
 				return (current && current.value);
 			}
-			// size() {
-			// 	const project = this.project;
-			// 	return project ? project.size : {};
-			// }
 		},
 		methods: {
 			...mapActions([
@@ -75,14 +61,6 @@
 				await this[DELETE_PROJECT]();
 				this.$router.push('/projects');
 			},
-			// onSizeChanged(info) {
-			// 	changesManager.size = info.value ? info.size : null;
-			// 	this.isChanged = changesManager.isChanged();
-			// },
-			// onShapeChanged(info) {
-			// 	changesManager.shapes = info.shapes;
-			// 	this.isChanged = changesManager.isChanged();
-			// },
 			// 	async onSaveAll() {
 			// 		const {size, shapes} = changesManager;
 			//
@@ -159,6 +137,7 @@
 
 	.clm-center {
 		flex: 3;
+		justify-content: center;
 		border-left: $border;
 		border-right: $border;
 	}

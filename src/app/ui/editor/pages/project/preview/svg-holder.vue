@@ -4,19 +4,33 @@
 </template>
 
 <script>
+	import {mapGetters} from 'vuex';
+	import {getters} from '@/app/store/types';
 	import SvgCanvas from '@/lib/components/svg/canvas';
 
+	const {CURRENT_INFO} = getters
+
 	export default {
-		name: 'holder',
 		components: {SvgCanvas},
-		props: ['shapes', 'size'],
 		computed: {
+			...mapGetters([CURRENT_INFO]),
+			project() {
+				return this[CURRENT_INFO].project;
+			},
+			size() {
+				const project = this.project;
+				return (project && project.value.size);
+			},
+			shapes() {
+				return this[CURRENT_INFO].shapes
+						.map((item) => item.value);
+			},
 			style() {
 				const size = this.size;
-				return {
+				return (size && {
 					width: size.width + size.unit,
 					height: size.height + size.unit
-				};
+				});
 			}
 		}
 	}
