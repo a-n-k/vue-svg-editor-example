@@ -18,6 +18,13 @@ function getSizeInfo(state) {
 	};
 }
 
+function isShapesChanged(state) {
+	const changed = state.current.duplicate.shapes.filter(function (item) {
+		return item.isChanged;
+	});
+	return changed.length > 0;
+}
+
 export default {
 	[mutations.SET_PROJECTS](state, items) {
 		state.projects = items;
@@ -86,5 +93,17 @@ export default {
 		const {originalSize, duplicateProject, duplicateSize} = getSizeInfo(state);
 		deep.resetValues(duplicateSize, originalSize);
 		duplicateProject.isChanged.size = false;
+	},
+
+	[mutations.CHANGE_SHAPE_INDEX](state, value) {
+		const {original, duplicate} = state.current,
+				oShape = original.figure,
+				dShape = duplicate.figure.value;
+		dShape.index = value;
+		duplicate.figure.isChanged = oShape.index !== dShape.index;
+		duplicate.shapes.sort(function (a, b) {
+			return a.value.index - b.value.index;
+		});
+		duplicate.project.isChanged.shapes = isShapesChanged(state);
 	}
 };

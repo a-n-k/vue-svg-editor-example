@@ -38,6 +38,7 @@
 <script>
 	import {mapGetters, mapActions, mapMutations} from 'vuex';
 	import {getters, actions, mutations} from '@/app/store/types';
+	import cast from '@/lib/modules/cast';
 
 	const
 			MSG_DELETE_SHAPE = 'Are you sure want to delete the shape?',
@@ -86,12 +87,11 @@
 				this[RESET_SIZE]();
 			},
 			onChangeSize(event) {
-				const {name, value} = event.target;
-				let numberValue = Number.parseInt(value);
-				if (isNaN(numberValue)) numberValue = 0;
+				const {name, value} = event.target,
+						numValue = cast.toInt(value);
 
 				this[CHANGE_SIZE]({
-					name, value: numberValue
+					name, value: numValue
 				});
 			},
 			onSaveAll(/* event */) {

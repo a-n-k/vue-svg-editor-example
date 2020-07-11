@@ -40,7 +40,6 @@
 	@import "~@/app/ui/base/scss/index.scss";
 
 	.list {
-		padding: 0 $padding 0 0;
 		width: 100%;
 	}
 

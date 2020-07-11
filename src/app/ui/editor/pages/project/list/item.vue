@@ -47,11 +47,11 @@
 </script>
 
 <style lang="scss" scoped>
-	$size: 20px;
+	$size: 16px;
 
 	.item {
 		margin: 5px 0;
-		padding: 5px 0 5px 10px;
+		padding: 5px 0;
 		cursor: pointer;
 	}
 
@@ -68,7 +68,7 @@
 		width: $size;
 		height: $size;
 		border: 2px solid black;
-		display: inline-flex;
+		display: inline-block;
 	}
 
 	.circle {
@@ -95,7 +95,7 @@
 	}
 
 	.label {
-		display: inline-flex;
+		display: inline-block;
 		margin: 0 0 0 20px;
 	}
 </style>

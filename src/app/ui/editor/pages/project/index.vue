@@ -18,11 +18,7 @@
 			div.column.clm-center
 				preview
 			div.column
-				//setting(
-					//:figure="figure" :original="shapeOriginal"
-					//:needSave="isChanged"
-					//@change="onShapeChanged"
-				//)
+				setting
 	div.empty-msg(v-else)
 		p Project not exists
 		p.link
@@ -30,12 +26,13 @@
 </template>
 
 <script>
-	import {mapGetters, mapActions, mapMutations} from 'vuex';
-	import {getters, actions, mutations} from '@/app/store/types';
+	import {mapGetters, mapActions} from 'vuex';
+	import {getters, actions} from '@/app/store/types';
+
 	import Toolbar from './toolbar';
 	import List from './list';
 	import Preview from './preview';
-	// import Setting from './setting/index';
+	import Setting from './setting';
 
 	const
 			MSG_DELETE_PROJECT = 'Are you sure want to delete the project?',
@@ -44,7 +41,7 @@
 
 	export default {
 		name: "project",
-		components: {Toolbar, List, Preview /*, Setting */},
+		components: {Toolbar, List, Preview, Setting},
 		computed: {
 			...mapGetters([CURRENT_INFO]),
 			project() {
@@ -89,10 +86,7 @@
 		watch: {
 			project(value) {
 				this.$root.setTitle(value && value.name);
-			},
-			// 'figure.index'() {
-			// 	this.shapes.sort(shapeUtils.compare);
-			// }
+			}
 		}
 	}
 </script>
@@ -125,7 +119,7 @@
 	.frame {
 		min-height: 500px;
 		display: flex;
-		padding: $padding 0 0 0;
+		padding: $padding 0;
 	}
 
 	.column {

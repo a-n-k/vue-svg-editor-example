@@ -1,31 +1,76 @@
 <template lang="pug">
-	div(v-if="figure")
-		form
+	div.forms(v-if="figure")
+		div.header.flex-v-center
+			div.flex-l-inline.tb-reset
+				button(title="Reset Shape Options"
+					:disabled="!isChanged"
+					@click.prevent="onReset"
+				): span.icon.reset
+			div.flex-l-inline {{fValue.name}}
+		form.f-form
+			//fieldset
+				legend zIndex
+				input.ipt-small(type="text" :value="fValue.index")
 			div.field
-				label.lbl index
-					input.ipt(type="text" v-model.lazy.trim.number="figure.index" required)
+				label.lbl
+					span.inline zIndex
+					input.ipt-small(
+						type="text" :value="fValue.index"
+						@change="onChangeIndex"
+					)
 			component(
-				:is="componentName(figure.type)"
-				:type="figure.type" :options="figure.options"
+				:is="componentName(fValue.type)"
+				:type="fValue.type" :options="fValue.options"
 			)
+	div.empty-msg.empty(v-else)
+		p Please select shape from list
 </template>
 
 <script>
+	import {mapGetters, mapMutations} from 'vuex';
+	import {getters, mutations} from '@/app/store/types';
+	import cast from '@/lib/modules/cast';
+
 	import FormCircle from './circle';
 	import FormEllipse from './ellipse';
 	import FormLine from './line';
 	import FormRect from './rectangle';
 	import FormText from './text';
 
+	const
+			{CURRENT_INFO} = getters,
+			{CHANGE_SHAPE_INDEX} = mutations;
+
 	export default {
-		name: "svg-forms",
 		components: {
 			FormCircle, FormEllipse, FormLine, FormRect, FormText
 		},
-		props: ['figure'],
+		computed: {
+			...mapGetters([CURRENT_INFO]),
+			figure() {
+				return this[CURRENT_INFO].figure;
+			},
+			fValue() {
+				return this.figure.value;
+			},
+			isChanged() {
+				return this.figure.isChanged;
+			}
+		},
 		methods: {
+			...mapMutations([CHANGE_SHAPE_INDEX]),
 			componentName(type) {
 				return ['form', type].join('-');
+			},
+			onChangeIndex(event) {
+				const value = cast.toInt(event.target.value);
+				this[CHANGE_SHAPE_INDEX](value);
+			},
+			onReset( /* event */) {
+				console.log('onShapeReset') // todo
+
+				// 		utils.deepResetValues(this.figure, this.original);
+				// 		this.isShapeChanged = false;
 			}
 		}
 	}
@@ -34,30 +79,73 @@
 <style lang="scss">
 	@import "~@/app/ui/base/scss/index.scss";
 
+	.empty {
+		margin: 100px 0;
+		font-size: inherit;
+	}
+
+	.forms {
+		.icon {
+			margin-left: 0;
+		}
+
+		input {
+			border: $border;
+			border-radius: $br-radius;
+			text-align: center;
+			font-size: 16px;
+		}
+
+		.ipt-small {
+			width: 50px;
+		}
+
+		.ipt-long {
+			width: 150px;
+		}
+	}
+
+	.header {
+		font-style: italic;
+		font-weight: bold;
+		padding-bottom: 5px;
+		border-bottom: $border;
+		color: navy;
+
+		.tb-reset {
+			margin: 0 20px 0 0;
+		}
+	}
+
+	.f-form {
+		padding: $padding 0;
+
+		fieldset {
+			border: $border;
+			border-radius: $br-radius;
+		}
+
+		legend {
+			margin-left: 25px;
+		}
+	}
+
 	.field {
-		padding: 0 10px;
+		padding-bottom: $padding;
 
 		.lbl {
 			color: navy;
 			font-style: italic;
 			font-size: 16px;
-		}
 
-		.ipt {
-			border: $border;
-			border-radius: $br-radius;
-			width: 50px;
-			text-align: center;
-			margin: 10px;
-			font-size: 16px;
-		}
-
-		.long {
-			width: 150px;
+			span {
+				margin-right: 15px;
+			}
 		}
 	}
 
 	.inline {
 		display: inline-block;
+		vertical-align: center;
 	}
 </style>
