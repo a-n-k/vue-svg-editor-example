@@ -1,16 +1,13 @@
 <template lang="pug">
 	div.forms(v-if="figure")
 		div.header.flex-v-center
-			div.flex-l-inline.tb-reset
+			div.flex-l-inline
 				button(title="Reset Shape Options"
 					:disabled="!isChanged"
 					@click.prevent="onReset"
 				): span.icon.reset
 			div.flex-l-inline {{fValue.name}}
 		form.f-form
-			//fieldset
-				legend zIndex
-				input.ipt-small(type="text" :value="fValue.index")
 			div.field
 				label.lbl
 					span.inline zIndex
@@ -20,8 +17,9 @@
 					)
 			component(
 				:is="componentName(fValue.type)"
-				:type="fValue.type" :options="fValue.options"
+				:options="fValue.options"
 			)
+			sections(:options="fValue.options")
 	div.empty-msg.empty(v-else)
 		p Please select shape from list
 </template>
@@ -36,6 +34,7 @@
 	import FormLine from './line';
 	import FormRect from './rectangle';
 	import FormText from './text';
+	import Sections from './sections';
 
 	const
 			{CURRENT_INFO} = getters,
@@ -43,7 +42,8 @@
 
 	export default {
 		components: {
-			FormCircle, FormEllipse, FormLine, FormRect, FormText
+			FormCircle, FormEllipse, FormLine, FormRect, FormText,
+			Sections
 		},
 		computed: {
 			...mapGetters([CURRENT_INFO]),
@@ -89,11 +89,11 @@
 			margin-left: 0;
 		}
 
-		input {
+		input, select {
 			border: $border;
 			border-radius: $br-radius;
 			text-align: center;
-			font-size: 16px;
+			padding: 2px 7px;
 		}
 
 		.ipt-small {
@@ -111,22 +111,22 @@
 		padding-bottom: 5px;
 		border-bottom: $border;
 		color: navy;
-
-		.tb-reset {
-			margin: 0 20px 0 0;
-		}
 	}
 
 	.f-form {
 		padding: $padding 0;
 
 		fieldset {
-			border: $border;
-			border-radius: $br-radius;
+			padding: $padding 0;
+			border-top: $border;
 		}
 
 		legend {
-			margin-left: 25px;
+			margin-left: $padding*2;
+			padding: 0 5px 3px 5px;
+			color: navy;
+			font-weight: bold;
+			font-style: italic;
 		}
 	}
 
@@ -136,10 +136,10 @@
 		.lbl {
 			color: navy;
 			font-style: italic;
-			font-size: 16px;
+			margin-right: $padding;
 
 			span {
-				margin-right: 15px;
+				margin-right: $padding;
 			}
 		}
 	}

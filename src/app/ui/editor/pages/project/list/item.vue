@@ -89,9 +89,8 @@
 	}
 
 	.text {
-		font-size: 20px;
+		padding: 0 0 0 2px;
 		font-weight: bold;
-		padding-left: 2px;
 	}
 
 	.label {

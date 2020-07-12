@@ -1,28 +1,37 @@
 <template lang="pug">
-	div
-		div
-			div.field.inline
-				label.lbl cx
-					input.ipt(type="text" v-model.lazy.trim.number="options.cx" required)
-			div.field.inline
-				label.lbl cy
-					input.ipt(type="text" v-model.lazy.trim.number="options.cy" required)
-		div
-			div.field.inline
-				label.lbl rx
-					input.ipt(type="text" v-model.lazy.trim.number="options.rx" required)
-			div.field.inline
-				label.lbl ry
-					input.ipt(type="text" v-model.lazy.trim.number="options.ry" required)
-		shared(:type="type" :options="options" )
+	fieldset
+		legend coordinates
+		div.field
+			label.lbl
+				span.inline cx
+				input.ipt-small(
+					type="text" data-type="int"
+					:value="options.cx"
+				)
+			label.lbl
+				span.inline cy
+				input.ipt-small(
+					type="text" data-type="int"
+					:value="options.cy"
+				)
+		div.field
+			label.lbl
+				span.inline rx
+				input.ipt-small(
+					type="text" data-type="int"
+					:value="options.rx"
+				)
+			label.lbl
+				span.inline ry
+				input.ipt-small(
+					type="text" data-type="int"
+					:value="options.ry"
+				)
 </template>
 
 <script>
-	import Shared from './shared';
-
 	export default {
 		name: 'form-ellipse',
-		props: ['type', 'options'],
-		components: {Shared}
+		props: ['options']
 	}
 </script>

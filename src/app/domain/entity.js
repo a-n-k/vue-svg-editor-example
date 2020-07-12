@@ -12,10 +12,14 @@ export const project = {
 
 const CIRCLE = 'circle', ELLIPSE = 'ellipse',
 		LINE = 'line', RECTANGLE = 'rect', TEXT = 'text',
-		fill = 'silver',
+		fill = {
+			color: 'silver',
+			opacity: 1
+		},
 		stroke = {
 			width: 2,
 			color: 'black',
+			opacity: 1,
 			dasharray: ''
 		},
 		font = {
@@ -39,7 +43,7 @@ export const shape = {
 			x1: WIDTH / 2, y1: HEIGHT / 2,
 			x2: WIDTH, y2: HEIGHT / 2,
 			// butt | round | square | inherit
-			stroke: Object.assign(stroke, {linecap: 'butt'})
+			stroke: Object.assign({linecap: 'butt'}, stroke)
 		},
 		[RECTANGLE]: {
 			x: 0, y: 0,
