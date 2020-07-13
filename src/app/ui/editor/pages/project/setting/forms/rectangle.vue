@@ -3,48 +3,57 @@
 		legend coordinates
 		div.field
 			label.lbl
-				span.inline cx
+				span.inline x
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.x"
+					name="x" :value="options.x"
+					@change="onChange"
 				)
 			label.lbl
-				span.inline cy
+				span.inline y
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.y"
+					name="y" :value="options.y"
+					@change="onChange"
 				)
 		div.field
 			label.lbl
 				span.inline rx
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.rx"
+					name="rx" :value="options.rx"
+					@change="onChange"
 				)
 			label.lbl
 				span.inline ry
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.ry"
+					name="ry" :value="options.ry"
+					@change="onChange"
 				)
 		div.field
 			label.lbl
 				span.inline width
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.width"
+					name="width" :value="options.width"
+					@change="onChange"
 				)
 			label.lbl
 				span.inline height
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.height"
+					name="height" :value="options.height"
+					@change="onChange"
 				)
 </template>
 
 <script>
+	import mixin from './mixin';
+
 	export default {
 		name: 'form-rect',
-		props: ['options']
+		secName: '',
+		mixins: [mixin]
 	}
 </script>

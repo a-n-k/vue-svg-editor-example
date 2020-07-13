@@ -6,32 +6,39 @@
 				span.inline cx
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.cx"
+					name="cx" :value="options.cx"
+					@change="onChange"
 				)
 			label.lbl
 				span.inline cy
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.cy"
+					name="cy" :value="options.cy"
+					@change="onChange"
 				)
 		div.field
 			label.lbl
 				span.inline rx
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.rx"
+					name="rx" :value="options.rx"
+					@change="onChange"
 				)
 			label.lbl
 				span.inline ry
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.ry"
+					name="ry" :value="options.ry"
+					@change="onChange"
 				)
 </template>
 
 <script>
+	import mixin from './mixin';
+
 	export default {
 		name: 'form-ellipse',
-		props: ['options']
+		secName: '',
+		mixins: [mixin]
 	}
 </script>

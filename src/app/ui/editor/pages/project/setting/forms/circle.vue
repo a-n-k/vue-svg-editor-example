@@ -6,25 +6,31 @@
 				span.inline cx
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.cx"
+					name="cx" :value="options.cx"
+					@change="onChange"
 				)
 			label.lbl
 				span.inline cy
 				input.ipt-small(
 					type="text"  data-type="int"
-					:value="options.cy"
+					name="cy" :value="options.cy"
+					@change="onChange"
 				)
 			label.lbl
 				span.inline r
 				input.ipt-small(
 					type="text"  data-type="int"
-					:value="options.r"
+					name="r" :value="options.r"
+					@change="onChange"
 				)
 </template>
 
 <script>
+	import mixin from './mixin';
+
 	export default {
 		name: "form-circle",
-		props: ['options']
+		secName: '',
+		mixins: [mixin]
 	}
 </script>

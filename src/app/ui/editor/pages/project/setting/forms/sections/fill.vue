@@ -5,27 +5,25 @@
 			label.lbl
 				span.inline color
 				input.ipt-long(
-					type="text" name="color"
-					:value="options.color"
+					type="text" data-type="color"
+					name="color" :value="options.color"
 					@change="onChange"
 				)
 		div.field
 			label.lbl
 				span.inline opacity
 				input.ipt-small(
-					type="text" name="opacity"
-					:value="options.opacity"
+					type="text" data-type="float"
+					name="opacity" :value="options.opacity"
 					@change="onChange"
 				)
 </template>
 
 <script>
+	import mixin from '../mixin';
+
 	export default {
-		props: ['options'],
-		methods: {
-			onChange(event) {
-				// todo
-			}
-		}
+		secName: 'fill',
+		mixins: [mixin]
 	}
 </script>

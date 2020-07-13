@@ -1,6 +1,7 @@
 import {mutations} from '@/app/store/types';
 import deep from '@/lib/modules/deep';
 import {byId} from '@/lib/modules/predicates';
+import cast from '@/lib/modules/cast';
 
 function createDuplicate(value, isProject = false) {
 	return {
@@ -95,15 +96,30 @@ export default {
 		duplicateProject.isChanged.size = false;
 	},
 
-	[mutations.CHANGE_SHAPE_INDEX](state, value) {
+	[mutations.CHANGE_SHAPE_INDEX](state, info) {
 		const {original, duplicate} = state.current,
 				oShape = original.figure,
 				dShape = duplicate.figure.value;
-		dShape.index = value;
-		duplicate.figure.isChanged = oShape.index !== dShape.index;
+		dShape.index = cast[info.dataType](info.value);
+		duplicate.figure.isChanged = !deep.equal(original.figure, dShape);
 		duplicate.shapes.sort(function (a, b) {
 			return a.value.index - b.value.index;
 		});
+		duplicate.project.isChanged.shapes = isShapesChanged(state);
+	},
+	[mutations.CHANGE_SHAPE_OPTION](state, info) {
+		const {original, duplicate} = state.current,
+				{secName, propName, value, dataType} = info,
+				castValue = cast[dataType](value),
+				figure = duplicate.figure,
+				fValue = figure.value,
+				options = fValue.options;
+		if (secName) {
+			options[secName][propName] = castValue;
+		} else {
+			options[propName] = castValue;
+		}
+		figure.isChanged = !deep.equal(original.figure, fValue);
 		duplicate.project.isChanged.shapes = isShapesChanged(state);
 	}
 };

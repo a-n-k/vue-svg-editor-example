@@ -18,13 +18,13 @@
 				@click.prevent="onResetSize"
 			): span.icon.reset
 			form
-				div.field
+				div.s-field
 					label width
 						input.ipt(type="text"
 							name="width" :value="size.width"
 							@change="onChangeSize"
 						)
-				div.field
+				div.s-field
 					label height
 						input.ipt(type="text"
 							name="height" :value="size.height"
@@ -123,7 +123,7 @@
 		height: 18px;
 	}
 
-	.field {
+	.s-field {
 		display: inline-block;
 		font-style: italic;
 

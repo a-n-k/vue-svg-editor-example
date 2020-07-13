@@ -12,7 +12,8 @@
 				label.lbl
 					span.inline zIndex
 					input.ipt-small(
-						type="text" :value="fValue.index"
+						type="text" data-type="int"
+						:value="fValue.index"
 						@change="onChangeIndex"
 					)
 			component(
@@ -27,7 +28,6 @@
 <script>
 	import {mapGetters, mapMutations} from 'vuex';
 	import {getters, mutations} from '@/app/store/types';
-	import cast from '@/lib/modules/cast';
 
 	import FormCircle from './circle';
 	import FormEllipse from './ellipse';
@@ -63,8 +63,10 @@
 				return ['form', type].join('-');
 			},
 			onChangeIndex(event) {
-				const value = cast.toInt(event.target.value);
-				this[CHANGE_SHAPE_INDEX](value);
+				const {value, dataset} = event.target;
+				this[CHANGE_SHAPE_INDEX]({
+					value, dataType: dataset.type
+				});
 			},
 			onReset( /* event */) {
 				console.log('onShapeReset') // todo

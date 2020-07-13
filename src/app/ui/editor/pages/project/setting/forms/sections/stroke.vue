@@ -6,7 +6,15 @@
 				span.inline width
 				input.ipt-small(
 					type="text" data-type="int"
-					:value="options.width"
+					name="width" :value="options.width"
+					@change="onChange"
+				)
+			label.lbl(v-if="options.width")
+				span.inline opacity
+				input.ipt-small(
+					type="text" data-type="float"
+					name="opacity" :value="options.opacity"
+					@change="onChange"
 				)
 		div(v-if="options.width")
 			div.field
@@ -14,23 +22,25 @@
 					span.inline color
 					input.ipt-long(
 						type="text"  data-type="color"
-						:value="options.color"
-					)
-			div.field
-				label.lbl
-					span.inline opacity
-					input.ipt-small(
-						type="text" name="opacity"
-						:value="options.opacity"
+						name="color" :value="options.color"
 						@change="onChange"
 					)
 			div.field
 				label.lbl
 					span.inline dasharray
-					input.ipt-long(type="text" :value="options.dasharray")
+					input.ipt-long(
+						type="text" data-type="string"
+						name="dasharray" :value="options.dasharray"
+						@change="onChange"
+					)
 			div.field(v-if="options.linecap")
-				label.lbl linecap
-					select.ipt-long(:value="options.linecap")
+				label.lbl
+					span.inline linecap
+					select.ipt-long(
+						data-type="string"
+						name="linecap" :value="options.linecap"
+						@change="onChange"
+					)
 						option(value="butt") butt
 						option(value="round") round
 						option(value="square") square
@@ -38,12 +48,10 @@
 </template>
 
 <script>
+	import mixin from '../mixin';
+
 	export default {
-		props: ['options'],
-		methods: {
-			onChange(event) {
-				// todo
-			}
-		}
+		secName: 'stroke',
+		mixins: [mixin]
 	}
 </script>

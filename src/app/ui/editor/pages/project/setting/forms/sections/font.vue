@@ -6,30 +6,31 @@
 				span.inline family
 				input.ipt-long(
 					type="text" data-type="string"
-					:value="options.family"
+					name="family" :value="options.family"
+					@change="onChange"
 				)
 		div.field
 			label.lbl
 				span.inline size
 				input.ipt-small(
-					type="text" data-type="int"
-					:value="options.size"
+					type="text" data-type="string"
+					name="size" :value="options.size"
+					@change="onChange"
 				)
 			label.lbl
 				span.inline weight
 				input.ipt-small(
 					type="text" data-type="string"
-					:value="options.weight"
+					name="weight" :value="options.weight"
+					@change="onChange"
 				)
 </template>
 
 <script>
+	import mixin from '../mixin';
+
 	export default {
-		props: ['options'],
-		methods: {
-			onChange(event) {
-				// todo
-			}
-		}
+		secName: 'font',
+		mixins: [mixin]
 	}
 </script>
