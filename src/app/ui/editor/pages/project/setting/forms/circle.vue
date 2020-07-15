@@ -1,23 +1,36 @@
 <template lang="pug">
-	div
-		div.field.inline
-			label.lbl cx
-				input.ipt(type="text" v-model.lazy.trim.number="options.cx" required)
-		div.field.inline
-			label.lbl cy
-				input.ipt(type="text" v-model.lazy.trim.number="options.cy" required)
+	fieldset
+		legend coordinates
 		div.field
-			label.lbl radius
-				input.ipt(type="text" v-model.lazy.trim.number="options.r" required)
-		shared(:type="type" :options="options" )
+			label.lbl
+				span.inline cx
+				input.ipt-small(
+					type="text" data-type="int"
+					name="cx" :value="options.cx"
+					@change="onChange"
+				)
+			label.lbl
+				span.inline cy
+				input.ipt-small(
+					type="text"  data-type="int"
+					name="cy" :value="options.cy"
+					@change="onChange"
+				)
+			label.lbl
+				span.inline r
+				input.ipt-small(
+					type="text"  data-type="int"
+					name="r" :value="options.r"
+					@change="onChange"
+				)
 </template>
 
 <script>
-	import Shared from './shared';
+	import mixin from './mixin';
 
 	export default {
 		name: "form-circle",
-		props: ['type', 'options'],
-		components: {Shared}
+		secName: '',
+		mixins: [mixin]
 	}
 </script>

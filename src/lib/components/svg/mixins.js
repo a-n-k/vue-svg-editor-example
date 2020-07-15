@@ -4,20 +4,19 @@ export const base = {
 	},
 	computed: {
 		style() {
-			const options = this.options,
-					fill = options.fill,
-					stroke = options.stroke,
+			const {fill, stroke, font} = this.options,
 					width = stroke.width,
 					linecap = stroke.linecap,
 					dasharray = stroke.dasharray,
-					font = options.font,
 					style = {};
 			if (fill) {
-				style.fill = fill
+				style.fill = fill.color;
+				style.fillOpacity = fill.opacity;
 			}
 			if (width) {
 				style.stroke = stroke.color;
 				style.strokeWidth = width;
+				style.strokeOpacity = stroke.opacity;
 				if (linecap && linecap !== 'butt') {
 					style.strokeLinecap = linecap;
 				}

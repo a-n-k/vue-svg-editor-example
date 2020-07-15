@@ -1,41 +1,59 @@
 <template lang="pug">
-	div
-		div
-			div.field.inline
-				label.lbl cx
-					input.ipt(type="text" v-model.lazy.trim.number="options.x" required)
-			div.field.inline
-				label.lbl cy
-					input.ipt(type="text" v-model.lazy.trim.number="options.y" required)
-		div
-			div.field.inline
-				label.lbl rx
-					input.ipt(type="text" v-model.lazy.trim.number="options.rx" required)
-			div.field.inline
-				label.lbl ry
-					input.ipt(type="text" v-model.lazy.trim.number="options.ry" required)
-		div
-			div.field.inline.size
-				label.lbl width
-					input.ipt(type="text" v-model.lazy.trim.number="options.width" required)
-			div.field.inline.size
-				label.lbl height
-					input.ipt(type="text" v-model.lazy.trim.number="options.height" required)
-		shared(:type="type" :options="options" )
+	fieldset
+		legend coordinates
+		div.field
+			label.lbl
+				span.inline x
+				input.ipt-small(
+					type="text" data-type="int"
+					name="x" :value="options.x"
+					@change="onChange"
+				)
+			label.lbl
+				span.inline y
+				input.ipt-small(
+					type="text" data-type="int"
+					name="y" :value="options.y"
+					@change="onChange"
+				)
+		div.field
+			label.lbl
+				span.inline rx
+				input.ipt-small(
+					type="text" data-type="int"
+					name="rx" :value="options.rx"
+					@change="onChange"
+				)
+			label.lbl
+				span.inline ry
+				input.ipt-small(
+					type="text" data-type="int"
+					name="ry" :value="options.ry"
+					@change="onChange"
+				)
+		div.field
+			label.lbl
+				span.inline width
+				input.ipt-small(
+					type="text" data-type="int"
+					name="width" :value="options.width"
+					@change="onChange"
+				)
+			label.lbl
+				span.inline height
+				input.ipt-small(
+					type="text" data-type="int"
+					name="height" :value="options.height"
+					@change="onChange"
+				)
 </template>
 
 <script>
-	import Shared from './shared';
+	import mixin from './mixin';
 
 	export default {
 		name: 'form-rect',
-		props: ['type', 'options'],
-		components: {Shared}
+		secName: '',
+		mixins: [mixin]
 	}
 </script>
-
-<style lang="scss" scoped>
-	.size {
-		padding-right: 0;
-	}
-</style>

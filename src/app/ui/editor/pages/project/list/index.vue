@@ -1,91 +1,49 @@
 <template lang="pug">
-	widget.list
-		template(#tools)
-			span.icon.trash(title="Delete Figure"
-				:class="{disabled:!isSelected}"
-				@click.prevent="onDelete"
+	div.list
+		div(v-if="shapes.length")
+			item(v-for="item in shapes"
+				:key="item.value.id"
+				:info="item"
 			)
-			span.icon.plus(title="Add Figure"
-				:class="{disabled:isNew}"
-				@click.prevent="onAdd"
-			)
-		template(#main)
-			div(v-if="shapes.length")
-				item(v-for="item in shapes" :key="item.id"
-					:value="item" :current="figure"
-					@selected="onShapeSelected"
-				)
-			div.empty(v-else)
-				p Figures are not exists
-				p.add Please add new figure from toolbar above
-			div.modal(v-if="isNew")
-				div.content
-					div.close
-						button(@click="cancel") &times;
-					form
-						select(v-model="model.type" @change="onTypeSelected")
-							option(disabled value="") Select shape type
-							option(v-for="tp in types" :value="tp") {{tp}}
+		div.empty-msg.empty(v-else)
+			p Shapes are not exists
+			p.add Please add new shape from toolbar above
 </template>
 
 <script>
-	import Widget from '../widget';
+	import {mapGetters, mapActions} from 'vuex';
+	import {getters, actions} from '@/app/store/types';
 	import Item from './item';
 
-	const
-			MSG_DELETE_FIGURE = 'Are you sure want to delete the figure?';
+	const INFO = getters.CURRENT_INFO,
+			LOAD_SHAPES = actions.LOAD_SHAPES;
 
 	export default {
 		name: "list",
-		components: {Widget, Item},
-		props: ['shapes', 'figure', 'newShape', 'changeShape', 'types'],
-		data() {
-			return {isNew: false, model: {}};
-		},
+		components: {Item},
 		computed: {
-			isSelected() {
-				return !!this.figure;
+			...mapGetters([INFO]),
+			shapes() {
+				return this[INFO].shapes;
 			}
 		},
 		methods: {
-			onDelete(/* event */) {
-				if (!this.isSelected) return;
-				if (confirm(MSG_DELETE_FIGURE)) {
-					this.$emit('remove');
-				}
-			},
-			onAdd(/* event */) {
-				if (this.isNew) return;
-				this.model = this.newShape();
-				this.isNew = true;
-			},
-			cancel(/* event */) {
-				this.isNew = false;
-			},
-			onTypeSelected(/* event */) {
-				this.isNew = false;
-				this.$emit('type', this.model);
-			},
-			onShapeSelected(item) {
-				this.$emit('change', item);
-			}
+			...mapActions([LOAD_SHAPES])
+		},
+		async created() {
+			await this[LOAD_SHAPES]();
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	@import "../../../base/style.scss";
+	@import "~@/app/ui/base/scss/index.scss";
 
 	.list {
-		padding: 0 $padding 0 0;
-	}
-
-	.plus {
-		background: url(~@/app/ui/editor/pages/project/assets/plus.svg);
+		width: 100%;
 	}
 
 	.empty {
-		@include empty-msg();
 		margin: 100px 0;
 		font-size: inherit;
 	}
@@ -94,39 +52,5 @@
 		margin: 20px 0 0 0;
 		color: navy;
 		font-weight: normal;
-	}
-
-	.modal {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-color: #efefef;
-
-		.content {
-			background-color: white;
-			padding: $padding;
-			border-radius: $br-radius;
-			width: 80%;
-			margin: 50px auto;
-
-			.close {
-				text-align: right;
-				margin: -10px 0 10px 0;
-
-				button {
-					font-size: 25px;
-				}
-			}
-
-			select {
-				width: 100%;
-				height: 24px;
-				font-size: 16px;
-				color: navy;
-				border: $border;
-			}
-		}
 	}
 </style>

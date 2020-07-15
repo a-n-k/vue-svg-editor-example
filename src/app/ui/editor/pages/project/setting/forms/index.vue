@@ -1,63 +1,152 @@
 <template lang="pug">
-	div(v-if="figure")
-		form
+	div.forms(v-if="figure")
+		div.header.flex-v-center
+			div.flex-l-inline
+				button(title="Reset Shape Options"
+					:disabled="!isChanged"
+					@click.prevent="onReset"
+				): span.icon.reset
+			div.flex-l-inline {{fValue.name}}
+		form.f-form
 			div.field
-				label.lbl index
-					input.ipt(type="text" v-model.lazy.trim.number="figure.index" required)
+				label.lbl
+					span.inline zIndex
+					input.ipt-small(
+						type="text" data-type="int"
+						:value="fValue.index"
+						@change="onChangeIndex"
+					)
 			component(
-				:is="componentName(figure.type)"
-				:type="figure.type" :options="figure.options"
+				:is="componentName(fValue.type)"
+				:options="fValue.options"
 			)
+			sections(:options="fValue.options")
+	div.empty-msg.empty(v-else)
+		p Please select shape from list
 </template>
 
 <script>
+	import {mapGetters, mapMutations} from 'vuex';
+	import {getters, mutations} from '@/app/store/types';
+
 	import FormCircle from './circle';
 	import FormEllipse from './ellipse';
 	import FormLine from './line';
 	import FormRect from './rectangle';
 	import FormText from './text';
+	import Sections from './sections';
+
+	const
+			{CURRENT_INFO} = getters,
+			{CHANGE_SHAPE_INDEX, RESET_SHAPE_OPTIONS} = mutations;
 
 	export default {
-		name: "svg-forms",
 		components: {
-			FormCircle, FormEllipse, FormLine, FormRect, FormText
+			FormCircle, FormEllipse, FormLine, FormRect, FormText,
+			Sections
 		},
-		props: ['figure'],
+		computed: {
+			...mapGetters([CURRENT_INFO]),
+			figure() {
+				return this[CURRENT_INFO].figure;
+			},
+			fValue() {
+				return this.figure.value;
+			},
+			isChanged() {
+				return this.figure.isChanged;
+			}
+		},
 		methods: {
+			...mapMutations([
+				CHANGE_SHAPE_INDEX, RESET_SHAPE_OPTIONS
+			]),
 			componentName(type) {
 				return ['form', type].join('-');
+			},
+			onChangeIndex(event) {
+				const {value, dataset} = event.target;
+				this[CHANGE_SHAPE_INDEX]({
+					value, dataType: dataset.type
+				});
+			},
+			onReset( /* event */) {
+				this[RESET_SHAPE_OPTIONS]();
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	@import "../../../../base/style.scss";
+	@import "~@/app/ui/base/scss/index.scss";
+
+	.empty {
+		margin: 100px 0;
+		font-size: inherit;
+	}
+
+	.forms {
+		.icon {
+			margin-left: 0;
+		}
+
+		input, select {
+			border: $border;
+			border-radius: $br-radius;
+			text-align: center;
+			padding: 2px 7px;
+		}
+
+		.ipt-small {
+			width: 50px;
+		}
+
+		.ipt-long {
+			width: 150px;
+		}
+	}
+
+	.header {
+		font-style: italic;
+		font-weight: bold;
+		padding-bottom: 5px;
+		border-bottom: $border;
+		color: navy;
+	}
+
+	.f-form {
+		padding: $padding 0;
+
+		fieldset {
+			padding: $padding 0;
+			border-top: $border;
+		}
+
+		legend {
+			margin-left: $padding*2;
+			padding: 0 5px 3px 5px;
+			color: navy;
+			font-weight: bold;
+			font-style: italic;
+		}
+	}
 
 	.field {
-		padding: 0 10px;
+		padding-bottom: $padding;
 
 		.lbl {
 			color: navy;
 			font-style: italic;
-			font-size: 16px;
-		}
+			margin-right: $padding;
 
-		.ipt {
-			border: $border;
-			border-radius: $br-radius;
-			width: 50px;
-			text-align: center;
-			margin: 10px;
-			font-size: 16px;
-		}
-
-		.long {
-			width: 150px;
+			span {
+				margin-right: $padding;
+			}
 		}
 	}
 
 	.inline {
 		display: inline-block;
+		vertical-align: center;
 	}
 </style>

@@ -11,7 +11,9 @@ img {
 	border-style: none;
 }
 
-button:focus, input[type=submit]:focus {
+button:focus,
+input[type=submit]:focus,
+select:focus {
 	outline: none;
 	box-shadow: none;
 }
@@ -26,4 +28,72 @@ body {
 
 button, input[type=submit] {
 	cursor: pointer;
+}
+
+button[disabled] {
+	opacity: 0.4;
+}
+
+/* icons */
+
+.icon {
+	display: inline-block;
+	margin: 0 10px;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+}
+
+.icon.disabled {
+	opacity: 0.4;
+}
+
+.icon.arrow {
+	background: url(~@/lib/icons/arrow.svg);
+}
+
+.icon.trash {
+	background: url(~@/lib/icons/trash.svg);
+}
+
+.icon.plus {
+	background: url(~@/lib/icons/plus.svg);
+}
+
+.icon.reset {
+	background: url(~@/lib/icons/reset.svg);
+}
+
+/* flex */
+
+.flex-vh-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.flex-v-center {
+	display: flex;
+	align-items: center;
+}
+
+.flex-l-inline {
+	display: inline-flex;
+	justify-content: flex-start;
+}
+
+.flex-r-inline {
+	display: inline-flex;
+	justify-content: flex-end;
+}
+
+/* projects and project */
+
+.empty-msg {
+	margin: 200px;
+	color: red;
+	text-align: center;
+	font-size: 18px;
+	font-style: italic;
+	font-weight: bold;
 }

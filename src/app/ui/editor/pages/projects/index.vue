@@ -1,7 +1,7 @@
 <template lang="pug">
 	div
 		div.list
-			div.empty(v-if="!projects.length")
+			div.empty-msg(v-if="!projects.length")
 				p Projects not exists
 			div.items(v-else)
 				router-link.rr-link(
@@ -9,12 +9,12 @@
 					tag="div", :to="link(pt.id)"
 				)
 					div.item
-						div.icon
+						div.project-icon
 						div.name
 							div.value {{pt.name}}
 		hr
-		div.toolbar
-			form(@submit="newProject")
+		div.new-project
+			form(@submit.prevent="newProject")
 				div.clm
 					input.ipt(
 						type="text" placeholder="Project Name"
@@ -27,44 +27,46 @@
 </template>
 
 <script>
-	import interactor from '@/app/domain/interactor';
+	import {mapGetters, mapActions} from 'vuex';
+	import {getters, actions} from '@/app/store/types';
 
-	const BASE_LINK = '/project/';
+	const BASE_LINK = '/project/',
+			LOAD_PROJECTS = actions.LOAD_PROJECTS,
+			CREATE_NEW_PROJECT = actions.CREATE_NEW_PROJECT;
 
 	export default {
 		name: "projects",
 		data() {
-			return {
-				projects: [],
-				model: interactor.newestProjectEntity()
-			};
+			return {model: {name: ''}};
+		},
+		computed: {
+			...mapGetters([getters.PROJECTS])
 		},
 		methods: {
+			...mapActions([
+				LOAD_PROJECTS, CREATE_NEW_PROJECT
+			]),
 			link(id) {
 				return BASE_LINK + id;
 			},
 			async newProject() {
-				const pt = await interactor.createProject(this.model);
-				this.projects.unshift(pt);
+				await this[CREATE_NEW_PROJECT](this.model);
+				this.model.name = '';
 			}
 		},
 		async created() {
-			this.projects = await interactor.loadProjects();
+			await this[LOAD_PROJECTS]();
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	@import "../../base/style.scss";
+	@import "~@/app/ui/base/scss/index.scss";
 
 	.list {
 		padding: $padding;
 		display: flex;
 		justify-content: center;
-	}
-
-	.empty {
-		@include empty-msg();
 	}
 
 	.rr-link {
@@ -83,10 +85,11 @@
 	}
 
 	.item:hover {
-		background-color: #efefef;
+		background-color: #dddddd;
+		cursor: pointer;
 	}
 
-	.icon {
+	.project-icon {
 		width: $i-size;
 		height: $i-size;
 		background: url(~@/app/ui/editor/pages/projects/project.png) center;
@@ -111,7 +114,7 @@
 
 	$font-size: 18px;
 
-	.toolbar {
+	.new-project {
 		margin-bottom: 15px;
 		text-align: center;
 	}
