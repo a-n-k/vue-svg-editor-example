@@ -76,7 +76,8 @@
 
 	.header {
 		font-style: italic;
-		padding-bottom: $padding;
+		padding-bottom: 7px;
+		margin-top: -3px;
 		border-bottom: $border;
 
 		.name {
