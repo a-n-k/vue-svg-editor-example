@@ -1,6 +1,6 @@
 import interactor from '@/app/domain/interactor';
 import {actions, mutations} from '@/app/store/types';
-import {byId} from '@/lib/modules/predicates'
+import {byId} from '@/lib/modules/predicates';
 
 export default {
 	async [actions.LOAD_PROJECTS]({commit}) {
@@ -40,12 +40,26 @@ export default {
 	async [actions.LOAD_SHAPES]({commit, state}) {
 		const projectId = state.current.original.project.id;
 		const items = await interactor.loadShapes(projectId);
-		commit(mutations.SET_SHAPES, items)
+		commit(mutations.SET_SHAPES, items);
 	},
 	async [actions.DELETE_SHAPE]({commit, state}) {
-		const shapetId = state.current.original.figure.id;
-		await interactor.deleteShape(shapetId);
-		commit(mutations.REMOVE_SHAPE, shapetId);
+		const shapeId = state.current.original.figure.id;
+		await interactor.deleteShape(shapeId);
+		commit(mutations.REMOVE_SHAPE, shapeId);
 		commit(mutations.SET_FIGURE, null);
+	},
+	async [actions.SAVE_ALL]({commit, state}) {
+		const {project, shapes} = state.current.duplicate;
+		await interactor.updateProject(project.value);
+		if (project.isChanged.shapes) {
+			const changedShapes = shapes.filter((shape) => shape.isChanged);
+			const length = changedShapes.length;
+			if (length) {
+				for (let i = 0; i < length; i++) {
+					await interactor.updateShape(changedShapes[i].value);
+				}
+			}
+		}
+		commit(mutations.SET_SAVED_INFO);
 	}
 };

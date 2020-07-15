@@ -1,7 +1,11 @@
 import {mutations} from '@/app/store/types';
 import deep from '@/lib/modules/deep';
-import {byId} from '@/lib/modules/predicates';
+import {byId, byNumberValue} from '@/lib/modules/predicates';
 import cast from '@/lib/modules/cast';
+
+function sortProjects(items) {
+	items.sort(byNumberValue('modified', -1));
+}
 
 function createDuplicate(value, isProject = false) {
 	return {
@@ -19,19 +23,29 @@ function getSizeInfo(state) {
 	};
 }
 
+function filterShapes(state) {
+	return state.current.duplicate.shapes.filter(
+			(item) => item.isChanged
+	);
+}
+
 function isShapesChanged(state) {
-	const changed = state.current.duplicate.shapes.filter(function (item) {
-		return item.isChanged;
-	});
-	return changed.length > 0;
+	return filterShapes(state).length > 0;
+}
+
+function getChangedShapes(state) {
+	return state.current.duplicate.project.isChanged.shapes ?
+			filterShapes(state) : [];
 }
 
 export default {
 	[mutations.SET_PROJECTS](state, items) {
+		sortProjects(items);
 		state.projects = items;
 	},
 	[mutations.SET_PROJECT](state, project) {
 		const {original, duplicate} = state.current;
+		project.modified = Date.now();
 		original.project = project;
 		duplicate.project = createDuplicate(deep.clone(project), true);
 	},
@@ -62,6 +76,8 @@ export default {
 	},
 	[mutations.SET_SHAPES](state, items) {
 		const {original, duplicate} = state.current;
+
+		items.sort(byNumberValue('index'));
 		original.shapes = items;
 
 		duplicate.shapes = items.map(function (shape) {
@@ -87,7 +103,7 @@ export default {
 
 	[mutations.CHANGE_SIZE](state, info) {
 		const {originalSize, duplicateProject, duplicateSize} = getSizeInfo(state);
-		duplicateSize[info.name] = info.value;
+		duplicateSize[info.name] = cast[info.dataType](info.value);
 		duplicateProject.isChanged.size = !deep.equal(originalSize, duplicateSize);
 	},
 	[mutations.RESET_SIZE](state) {
@@ -101,7 +117,7 @@ export default {
 				oShape = original.figure,
 				dShape = duplicate.figure.value;
 		dShape.index = cast[info.dataType](info.value);
-		duplicate.figure.isChanged = !deep.equal(original.figure, dShape);
+		duplicate.figure.isChanged = !deep.equal(oShape, dShape);
 		duplicate.shapes.sort(function (a, b) {
 			return a.value.index - b.value.index;
 		});
@@ -121,5 +137,25 @@ export default {
 		}
 		figure.isChanged = !deep.equal(original.figure, fValue);
 		duplicate.project.isChanged.shapes = isShapesChanged(state);
+	},
+	[mutations.RESET_SHAPE_OPTIONS](state) {
+		const {original, duplicate} = state.current,
+				dFigure = duplicate.figure;
+		deep.resetValues(dFigure.value, original.figure);
+		dFigure.isChanged = false;
+	},
+
+	[mutations.SET_SAVED_INFO](state) {
+		const {original, duplicate} = state.current;
+		deep.resetValues(original.project, duplicate.project.value);
+		let originalShape;
+		getChangedShapes(state).forEach(function (shape) {
+			originalShape = original.shapes.find(byId(shape.value.id));
+			deep.resetValues(originalShape, shape.value);
+			shape.isChanged = false;
+		});
+		const isChanged = duplicate.project.isChanged;
+		isChanged.size = isChanged.shapes = false;
+		sortProjects(state.projects);
 	}
 };

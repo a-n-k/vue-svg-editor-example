@@ -38,7 +38,7 @@
 
 	const
 			{CURRENT_INFO} = getters,
-			{CHANGE_SHAPE_INDEX} = mutations;
+			{CHANGE_SHAPE_INDEX, RESET_SHAPE_OPTIONS} = mutations;
 
 	export default {
 		components: {
@@ -58,7 +58,9 @@
 			}
 		},
 		methods: {
-			...mapMutations([CHANGE_SHAPE_INDEX]),
+			...mapMutations([
+				CHANGE_SHAPE_INDEX, RESET_SHAPE_OPTIONS
+			]),
 			componentName(type) {
 				return ['form', type].join('-');
 			},
@@ -69,10 +71,7 @@
 				});
 			},
 			onReset( /* event */) {
-				console.log('onShapeReset') // todo
-
-				// 		utils.deepResetValues(this.figure, this.original);
-				// 		this.isShapeChanged = false;
+				this[RESET_SHAPE_OPTIONS]();
 			}
 		}
 	}

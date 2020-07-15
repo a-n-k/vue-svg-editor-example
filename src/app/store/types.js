@@ -17,7 +17,9 @@ export const mutations = {
 	CHANGE_SIZE: 'changeSize',
 	RESET_SIZE: 'resetSize',
 	CHANGE_SHAPE_INDEX: 'changeShapeIndex',
-	CHANGE_SHAPE_OPTION: 'changeShapeOption'
+	CHANGE_SHAPE_OPTION: 'changeShapeOption',
+	RESET_SHAPE_OPTIONS: 'resetShapeOptions',
+	SET_SAVED_INFO: 'setSavedInfo'
 };
 
 export const actions = {
@@ -27,5 +29,6 @@ export const actions = {
 	DELETE_PROJECT: 'deleteProject',
 	CREATE_NEW_SHAPE: 'createNewShape',
 	LOAD_SHAPES: 'loadShapes',
-	DELETE_SHAPE: 'deleteShape'
+	DELETE_SHAPE: 'deleteShape',
+	SAVE_ALL: 'saveAll'
 };

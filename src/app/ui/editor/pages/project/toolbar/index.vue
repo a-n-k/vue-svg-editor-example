@@ -32,18 +32,19 @@
 						)
 		div.tb-sep
 		div.flex-l-inline
-			button.save-all(:disabled="!needSave" @click="onSaveAll") Save All
+			button.save-all(
+				:disabled="!needSave" @click="onSaveAll"
+			) Save All
 </template>
 
 <script>
 	import {mapGetters, mapActions, mapMutations} from 'vuex';
 	import {getters, actions, mutations} from '@/app/store/types';
-	import cast from '@/lib/modules/cast';
 
 	const
 			MSG_DELETE_SHAPE = 'Are you sure want to delete the shape?',
 			{SHAPE_TYPES, CURRENT_INFO} = getters,
-			{CREATE_NEW_SHAPE, DELETE_SHAPE} = actions,
+			{CREATE_NEW_SHAPE, DELETE_SHAPE, SAVE_ALL} = actions,
 			{CHANGE_SIZE, RESET_SIZE} = mutations;
 
 	export default {
@@ -64,11 +65,12 @@
 				return (project && project.isChanged.size);
 			},
 			needSave() {
-				return false; // todo
+				const {size, shapes} = this.project.isChanged;
+				return size || shapes;
 			}
 		},
 		methods: {
-			...mapActions([CREATE_NEW_SHAPE, DELETE_SHAPE]),
+			...mapActions([CREATE_NEW_SHAPE, DELETE_SHAPE, SAVE_ALL]),
 			...mapMutations([CHANGE_SIZE, RESET_SIZE]),
 			onShapeRemove(/* event */) {
 				if (!confirm(MSG_DELETE_SHAPE)) return;
@@ -87,15 +89,13 @@
 				this[RESET_SIZE]();
 			},
 			onChangeSize(event) {
-				const {name, value} = event.target,
-						numValue = cast.toInt(value);
-
+				const {name, value} = event.target;
 				this[CHANGE_SIZE]({
-					name, value: numValue
+					name, value, dataType: 'int'
 				});
 			},
-			onSaveAll(/* event */) {
-				console.log('onSaveAll') // TODO
+			async onSaveAll(/* event */) {
+				await this[SAVE_ALL]();
 			}
 		}
 	}

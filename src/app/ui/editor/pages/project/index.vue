@@ -57,27 +57,7 @@
 				if (!confirm(MSG_DELETE_PROJECT)) return;
 				await this[DELETE_PROJECT]();
 				this.$router.push('/projects');
-			},
-			// 	async onSaveAll() {
-			// 		const {size, shapes} = changesManager;
-			//
-			// 		if (size) {
-			// 			const project = this.project;
-			// 			project.size = Object.assign({}, size);
-			// 			await interactor.updateProject(project);
-			// 		}
-			//
-			// 		const length = shapes.length;
-			// 		if (length) {
-			// 			for (let i = 0; i < length; i++) {
-			// 				await interactor.updateShape(shapes[i]);
-			// 			}
-			// 		}
-			// 		originalShapes = utils.deepClone(this.shapes);
-			//
-			// 		changesManager.reset();
-			// 		this.isChanged = false;
-			// 	}
+			}
 		},
 		async created() {
 			const projectId = Number(this.$route.params.id);
