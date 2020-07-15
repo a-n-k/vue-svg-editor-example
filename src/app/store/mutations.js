@@ -7,6 +7,12 @@ function sortProjects(items) {
 	items.sort(byNumberValue('modified', -1));
 }
 
+function sortShapes(items) {
+	items.sort(function (a, b) {
+		return a.value.index - b.value.index;
+	});
+}
+
 function createDuplicate(value, isProject = false) {
 	return {
 		value,
@@ -118,9 +124,7 @@ export default {
 				dShape = duplicate.figure.value;
 		dShape.index = cast[info.dataType](info.value);
 		duplicate.figure.isChanged = !deep.equal(oShape, dShape);
-		duplicate.shapes.sort(function (a, b) {
-			return a.value.index - b.value.index;
-		});
+		sortShapes(duplicate.shapes);
 		duplicate.project.isChanged.shapes = isShapesChanged(state);
 	},
 	[mutations.CHANGE_SHAPE_OPTION](state, info) {
@@ -143,6 +147,8 @@ export default {
 				dFigure = duplicate.figure;
 		deep.resetValues(dFigure.value, original.figure);
 		dFigure.isChanged = false;
+		duplicate.project.isChanged.shapes = isShapesChanged(state);
+		sortShapes(duplicate.shapes);
 	},
 
 	[mutations.SET_SAVED_INFO](state) {
