@@ -4,4 +4,4 @@ Please visit to ***[homepage](https://a-n-k.github.io/vue-svg-editor-example/)**
 
 > This editor uses local IndexedDB for store yours projects
 
-![screenshot](docs/images/screenshot.png) 
+![screenshot](docs/images/v020.png) 
